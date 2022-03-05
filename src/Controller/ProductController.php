@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,7 +67,21 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $product->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('product_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $product->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($product);
             $manager->flush();
@@ -96,5 +111,23 @@ class ProductController extends AbstractController
         [
             'productform' => $form
         ]);
+    }
+
+    #[Route("/asc",name:"sort_asc_product")]
+    public function ascName(ProductRepository $repository) {
+        $products = $repository->sortProductAsc();
+        return $this->render('product/index.html.twig',[
+            'products'=> $products
+        ]);
+    }
+
+
+    #[Route("/desc",name:"sort_desc_product")]
+    public function descName(ProductRepository $repository) {
+        $products = $repository->sortProductDesc();
+        return $this->render('product/index.html.twig',[
+            'products'=> $products
+        ]);
+        
     }
 }

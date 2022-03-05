@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +17,7 @@ class CategoryController extends AbstractController
     {
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
         return $this->render('category/index.html.twig',[
-            'categorys'=> $categories
+            'categories'=> $categories
         ]);
     }
     //View category by id
@@ -93,5 +94,23 @@ class CategoryController extends AbstractController
         [
             'categoryform' => $form
         ]);
+    }
+
+    #[Route("/asc",name:"sort_asc_category")]
+    public function ascName(CategoryRepository $repository) {
+        $categories = $repository->sortCategoryAsc();
+        return $this->render('category/index.html.twig',[
+            'categories'=> $categories
+        ]);
+    }
+
+
+    #[Route("/desc",name:"sort_desc_category")]
+    public function descName(CategoryRepository $repository) {
+        $categories = $repository->sortCategoryDesc();
+        return $this->render('category/index.html.twig',[
+            'categories'=> $categories
+        ]);
+        
     }
 }

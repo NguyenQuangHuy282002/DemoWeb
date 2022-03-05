@@ -10,29 +10,30 @@
         <p class="alert alert-danger">{{flash}}</p>
     {% endfor %}
     </div>
-<h1 class="text text-primary text-center">category list</h1>
+    <h1 class="text text-primary text-center">Category list</h1>
     <a href="{{path('category_add')}}" class="btn btn-success btn-center">Add new category</a>
 
     <table class="table table-primary">
         <thead>
         <tr>
-            <th>category ID</th>
-            <th>category name</th>
+            <th>Category ID</th>
+            <th>
+            <a href="{{path('sort_asc_category')}}"><img src="{{asset('images/up.png')}}" width="10" height="10"></a>      
+            Category name   
+            <a href="{{path('sort_desc_category')}}"><img src="{{asset('images/down.png')}} " width="10" height="10"></a>
+            </th>
+            
             <th>Menu</th>
         </tr>
         </thead>
         <tbody>
-        {% for p in categorys %}
+        {% for c in categories %}
             <tr>
-                <td>{{p.id}}</td>
+                <td>{{c.id}}</td>
+                <td>{{c.name}}</td>
                 <td>
-                <a href="{{path('category_detail', {'id': p.id})}}">{{p.name}}</a>
-                </td>
-
-                
-                <td>
-                    <a href="{{path('category_edit', {'id':p.id})}}" class="btn btn-danger">Edit</a>
-                    <a href="{{path('category_delete', {'id':p.id})}}" class="btn btn-warning"
+                    <a href="{{path('category_edit', {'id':c.id})}}" class="btn btn-danger">Edit</a>
+                    <a href="{{path('category_delete', {'id':c.id})}}" class="btn btn-warning"
                     onclick="return confirm('do you want to delete?')">Delete</a>
 
                 </td>
