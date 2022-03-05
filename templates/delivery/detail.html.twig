@@ -12,9 +12,9 @@
          <h1 class="text text-success">{{ delivery.name }}</h1>
          <h2>Description: {{ delivery.description }}</h2>
          <h2>Orders: </h2>
-         {# {% for book in delivery.products %}
-            <a href="{{ path('product_detail', {'id' : product.id })}}">
-              <h4 class="text text-primary">{{ product.name }}</h4> 
+         {# {% for order in delivery.orders %}
+            <a href="{{ path('order_detail', {'id' : order.id })}}">
+              <h4 class="text text-primary">{{ order.id }}</h4> 
             </a> 
          {% endfor %} #}
       </div>
