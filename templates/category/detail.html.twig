@@ -7,7 +7,13 @@
             <div class="col">
                 <h1>{{category.name}}</h1>
                 <h2>Description: {{category.description}}</h2>
-                
+                <h2>Products:
+                {% for product in category.products %}
+                     <a class="text-decoration-none" href="{{ path('product_detail', {'id' : product.id }) }}">
+                          {{ product.name }} </a>
+                     <br>
+                {% endfor %}
+                </h2>
             </div>
         </div>
     </div>

@@ -11,6 +11,8 @@
     {% endfor %}
     </div>
     <h1 class="text text-primary text-center">Product list</h1>
+    {# page for admin #}
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{path('product_add')}}" class="btn btn-success btn-center">Add new product</a>
 
     <table class="table table-primary">
@@ -46,5 +48,35 @@
         {% endfor %}
         </tbody>
     </table>
+    {# page for user #}
+    {% else %}
+    <table class="table table-primary">
+        <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>
+            <a href="{{path('sort_asc_product')}}"><img src="{{asset('images/up.png')}}" width="10" height="10"></a>      
+            Product name   
+            <a href="{{path('sort_desc_product')}}"><img src="{{asset('images/down.png')}} " width="10" height="10"></a>
+            </th>
+            
+            <th>Image</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for p in products %}
+            <tr>
+                <td>{{p.id}}</td>
+                <td>{{p.name}}</td>
+
+                <td>
+                <a href="{{path('product_detail', {'id': p.id})}}"><img src="{{asset('images/products/' ~ p.image)}}" width="200" height = "200"></a>
+                </td>
+                
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 </div>
 {% endblock %}

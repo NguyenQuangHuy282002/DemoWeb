@@ -11,6 +11,8 @@
     {% endfor %}
     </div>
     <h1 class="text text-primary text-center">Category list</h1>
+    {# page for admin #}
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{path('category_add')}}" class="btn btn-success btn-center">Add new category</a>
 
     <table class="table table-primary">
@@ -30,7 +32,7 @@
         {% for c in categories %}
             <tr>
                 <td>{{c.id}}</td>
-                <td>{{c.name}}</td>
+                <td><a href="{{path('category_detail', {'id': c.id})}}">{{c.name}}</a></td>
                 <td>
                     <a href="{{path('category_edit', {'id':c.id})}}" class="btn btn-danger">Edit</a>
                     <a href="{{path('category_delete', {'id':c.id})}}" class="btn btn-warning"
@@ -41,5 +43,31 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {# page for user #}
+    {% else %}
+    <table class="table table-primary">
+        <thead>
+        <tr>
+            <th>Category ID</th>
+            <th>
+            <a href="{{path('sort_asc_category')}}"><img src="{{asset('images/up.png')}}" width="10" height="10"></a>      
+            Category name   
+            <a href="{{path('sort_desc_category')}}"><img src="{{asset('images/down.png')}} " width="10" height="10"></a>
+            </th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        {% for c in categories %}
+            <tr>
+                <td>{{c.id}}</td>
+                <td><a href="{{path('category_detail', {'id': c.id})}}">{{c.name}}</a></td>
+                
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 </div>
 {% endblock %}

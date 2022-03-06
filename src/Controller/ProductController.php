@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 #[Route('/product')]
@@ -40,6 +41,9 @@ class ProductController extends AbstractController
         ]);
     }
     // Delete product
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/delete/{id}', name: 'product_delete')]
     public function DeleteProduct($id)
     {
@@ -59,6 +63,9 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('product_index');
     }
     //Add new product
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/add', name: 'product_add')]
     public function AddProduct(Request $request)
     {
@@ -94,6 +101,9 @@ class ProductController extends AbstractController
         ]);
     }
     //Edit product
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/edit/{id}', name: 'product_edit')]
     public function EditProduct(Request $request, $id)
     {
@@ -101,6 +111,21 @@ class ProductController extends AbstractController
         $form = $this->createForm(ProductType::class,$product);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $product->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('product_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $product->setImage($imageName);
+            }
             
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($product);

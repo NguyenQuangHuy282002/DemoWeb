@@ -13,7 +13,11 @@
                 <h2>Quantity: {{product.quantity}}</h2>
                 <h2>Date: {{product.date | date('y/m/d')}}</h2>
                 <h2>Description: {{product.description}}</h2>
-                
+                <h2>Category: 
+                <a class="text-decoration-none" href="{{ path('category_detail', {'id' : product.category.id }) }}">
+                    {{ product.category.name }} </a>
+                <br>
+                </h2>
             </div>
         </div>
     </div>
