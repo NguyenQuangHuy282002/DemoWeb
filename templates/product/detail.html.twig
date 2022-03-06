@@ -18,6 +18,11 @@
                     {{ product.category.name }} </a>
                 <br>
                 </h2>
+                <h2>Brand: 
+                <a class="text-decoration-none" href="{{ path('brand_detail', {'id' : product.brand.id }) }}">
+                    {{ product.brand.name }} </a>
+                <br>
+                </h2>
             </div>
         </div>
     </div>

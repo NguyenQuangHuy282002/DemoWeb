@@ -14,7 +14,11 @@
     {# page for admin #}
     {% if is_granted('ROLE_ADMIN') %}
     <a href="{{path('product_add')}}" class="btn btn-success btn-center">Add new product</a>
-
+    <div class="form-group col-md-6 mt-3">
+        <form action="{{ path('product_search') }}" method="post">
+            <input type="search" name="word" required class="form-control" placeholder="Search product name">
+        </form>
+    </div>
     <table class="table table-primary">
         <thead>
         <tr>

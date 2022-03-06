@@ -155,4 +155,15 @@ class ProductController extends AbstractController
         ]);
         
     }
+
+    #[Route('/search', name: 'product_search')]
+    public function SearchProduct(Request $request, ProductRepository $repository)
+    {
+        $name = $request->get('word');
+        $product = $repository->searchProduct($name);
+            return $this->render("product/index.html.twig",
+            [
+                'products' => $product
+            ]);
+    }
 }

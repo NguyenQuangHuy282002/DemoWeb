@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Supplier detail {% endblock %}
+
+{% block body %}
+<div class="container col-md-6 mt-5">
+   <div class="row">
+      <div class="col">
+         <img src="{{asset('images/supplier/' ~ supplier.image)}}" width="300" height="400">  
+      </div>
+      <div class="col text-center mt-3">
+         <h1 class="text text-success">{{ supplier.name }}</h1>
+         <h2>Description: {{ supplier.description }}</h2>
+         <h2>Brands: </h2>
+         {# {% for brand in supplier.brands %}
+            <a href="{{ path('brand_detail', {'id' : brand.id })}}">
+              <h4 class="text text-primary">{{ brand.name }}</h4> 
+            </a> 
+         {% endfor %} #}
+      </div>
+   </div>
+</div>
+{% endblock %}

@@ -113,4 +113,15 @@ class CategoryController extends AbstractController
         ]);
         
     }
+
+    #[Route('/search', name: 'category_search')]
+    public function SearchCategory(Request $request, CategoryRepository $repository)
+    {
+        $name = $request->get('word');
+        $category = $repository->searchCategory($name);
+            return $this->render("category/index.html.twig",
+            [
+                'categories' => $category
+            ]);
+    }
 }

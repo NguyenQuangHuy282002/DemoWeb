@@ -45,6 +45,31 @@ class BrandRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Brand[] 
+     */
+    public function viewBrandList()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Brand[] Returns an array of Author objects
+     */
+    public function searchBrand($keyword)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.name LIKE :key')
+            ->setParameter('key', '%' . $keyword . '%')
+            ->orderBy('a.name', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Brand[] Returns an array of Brand objects
     //  */

@@ -96,4 +96,18 @@ class CategoryRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @return Category[] Returns an array of Author objects
+     */
+    public function searchCategory($keyword)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.name LIKE :key')
+            ->setParameter('key', '%' . $keyword . '%')
+            ->orderBy('a.name', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
 }

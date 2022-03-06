@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div
+		class="container col-md-6 mt-5 text-center">
+		{# code để hiển thị flash message được gửi từ controller #}
+		<div class="container col-md-4">
+			{% for flash in app.flashes('Success') %}
+				<p class="alert alert-warning">{{ flash }}</p>
+			{% endfor %}
+			{% for flash in app.flashes('Error') %}
+				<p class="alert alert-danger">{{ flash }}</p>
+			{% endfor %}
+		</div>
+		<h1 class="text text-success">Brand List</h1>
+		<a href="{{ path('brand_add') }}" class="btn btn-success">Add brand</a>
+		<div class="form-group col-md-6 mt-3">
+			<form action="{{ path('brand_search') }}" method="post">
+				<input type="search" name="word" required class="form-control" placeholder="Search brand name">
+			</form>
+		</div>
+		<table class="table table-primary mt-3">
+			<thead>
+				<tr>
+					<th>Brand Id</th>
+					<th>Brand Name</th>
+					<th>Brand Image</th>
+					<th>Menu</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for brand in brands %}
+					<tr>
+						<td>{{ brand.id }}</td>
+						<td>{{ brand.name }}</td>
+						<td>
+							<a href="{{ path ('brand_detail', {'id' : brand.id })}}">
+								<img src="{{asset('images/brands/' ~ brand.image)}}" width="100" height="100">
+							</a>
+						</td>
+						<td>
+							<a href="{{ path ('brand_edit', {'id' : brand.id })}}" class="btn btn-warning">Edit</a>
+							<a href="{{ path ('brand_delete', {'id' : brand.id })}}" class="btn btn-danger" onclick="return confirm('Are you sure to delete this brand ?');">Delete</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
