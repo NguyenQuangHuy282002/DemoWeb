@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Delivery;
+use App\Repository\DeliveryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CartController extends AbstractController
 {
     #[Route('/', name: 'cart')]
-    public function index(SessionInterface $si, ProductRepository $PR)
+    public function index(SessionInterface $si, ProductRepository $PR, DeliveryRepository $DR)
     {
         $cart = $si->get('cart', []);
 
@@ -35,13 +37,14 @@ class CartController extends AbstractController
             $total += $totalItem;
         }
 
-        dd($cartWithData);
+        // dd($cartWithData);
 
-
+        // $delivery = $this -> getDoctrine() -> getRepository(Delivery::class)->findall();
 
         return $this->render('cart/index.html.twig', [
             'items' => $cartWithData,
             'total' => $total,
+            'delivery' => $DR->findall(),
         ]);
     }
 
@@ -51,7 +54,7 @@ class CartController extends AbstractController
     {
         $cart = $session->get('cart', []);
 
-        if (!empty($cart)) {
+        if (!empty($cart[$id])) {
             $cart[$id]++;
         } else {
             $cart[$id] = 1;
@@ -59,17 +62,17 @@ class CartController extends AbstractController
 
         $session->set('cart', $cart);
 
-        dd($session->get('cart'));
+        // dd($session->get('cart'));
 
         return $this->redirectToRoute('cart', []);
     }
 
-    #[Route('/decrease/{id}', name: 'cart_add')]
+    #[Route('/decrease/{id}', name: 'cart_delete')]
     public function cart_decrease($id, Session $session)
     {
         $cart = $session->get('cart', []);
 
-        if (count($cart[$id]) > 1) {
+        if ($cart[$id] > 1) {
             $cart[$id]--;
         } else {
             unset($cart[$id]);
@@ -77,7 +80,7 @@ class CartController extends AbstractController
 
         $session->set('cart', $cart);
 
-        dd($session->get('cart'));
+        // dd($session->get('cart'));
 
         return $this->redirectToRoute(
             'cart'
@@ -85,7 +88,7 @@ class CartController extends AbstractController
     }
 
 
-    #[Route('/remove/{id}', name: 'cart_add')]
+    #[Route('/remove/{id}', name: 'cart_remove')]
     public function cart_remove($id, Session $session)
     {
         $cart = $session->get('cart', []);

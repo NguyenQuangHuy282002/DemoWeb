@@ -1,18 +1,300 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Cart
+{% endblock %}
+
+{% block sidebar %}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		{
+			# .example-wrapper {
+				margin: 1em auto;
+				max-width: 800px;
+				width: 95%;
+				font: 18px / 1.5 sans-serif;
+			}
+			.example-wrapper code {
+				background: #F5F5F5;
+				padding: 2px 6px;
+			} #
+		}
+		body {
+			background: #ddd;
+			min-height: 100vh;
+			vertical-align: middle;
+			display: flex;
+			font-family: sans-serif;
+			font-size: 0.8rem;
+			font-weight: bold
+		}
 
-<div class="example-wrapper">
-    {% if items | length > 0 %}
-        
-    {% else %}
-        
-    {% endif %}
-</div>
+		.title {
+			margin-bottom: 5vh
+		}
+
+		.card {
+			margin: auto;
+			max-width: 950px;
+			width: 90%;
+			box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 1rem;
+			border: transparent
+		}
+
+		@media(max-width:767px) {
+			.card {
+				margin: 3vh auto
+			}
+		}
+
+		.cart {
+			background-color: #fff;
+			padding: 4vh 5vh;
+			border-bottom-left-radius: 1rem;
+			border-top-left-radius: 1rem
+		}
+
+		@media(max-width:767px) {
+			.cart {
+				padding: 4vh;
+				border-bottom-left-radius: unset;
+				border-top-right-radius: 1rem
+			}
+		}
+
+		.summary {
+			background-color: #ddd;
+			border-top-right-radius: 1rem;
+			border-bottom-right-radius: 1rem;
+			padding: 4vh;
+			color: rgb(65, 65, 65)
+		}
+
+		@media(max-width:767px) {
+			.summary {
+				border-top-right-radius: unset;
+				border-bottom-left-radius: 1rem
+			}
+		}
+
+		.summary .col-2 {
+			padding: 0
+		}
+
+		.summary .col-10 {
+			padding: 0
+		}
+
+		.row {
+			margin: 0
+		}
+
+		.title b {
+			font-size: 1.5rem
+		}
+
+		.main {
+			margin: 0;
+			padding: 2vh 0;
+			width: 100%
+		}
+
+		.col-2,
+		.col {
+			padding: 0 1vh
+		}
+
+		a {
+			padding: 0 1vh
+		}
+
+		.close {
+			margin-left: auto;
+			font-size: 0.7rem
+		}
+
+		img {
+			width: 3.5rem
+		}
+
+		.back-to-shop {
+			margin-top: 4.5rem
+		}
+
+		h5 {
+			margin-top: 4vh
+		}
+
+		hr {
+			margin-top: 1.25rem
+		}
+
+		form {
+			padding: 2vh 0
+		}
+
+		select {
+			border: 1px solid rgba(0, 0, 0, 0.137);
+			padding: 1.5vh 1vh;
+			margin-bottom: 4vh;
+			outline: none;
+			width: 100%;
+			background-color: rgb(247, 247, 247)
+		}
+
+		input {
+			border: 1px solid rgba(0, 0, 0, 0.137);
+			padding: 1vh;
+			margin-bottom: 4vh;
+			outline: none;
+			width: 100%;
+			background-color: rgb(247, 247, 247)
+		}
+
+		input:focus::-webkit-input-placeholder {
+			color: transparent
+		}
+
+		.btn {
+			background-color: #000;
+			border-color: #000;
+			color: white;
+			font-size: 0.7rem;
+			margin-top: 4vh;
+			padding: 1vh;
+			border-radius: 10px
+		}
+
+		.btn:focus {
+			box-shadow: none;
+			outline: none;
+			box-shadow: none;
+			color: white;
+			-webkit-box-shadow: none;
+			-webkit-user-select: none;
+			transition: none
+		}
+
+		.btn:hover {
+			color: white
+		}
+
+		a {
+			color: black
+		}
+
+		a:hover {
+			color: black;
+			text-decoration: none
+		}
+
+		#code {
+			background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+			background-repeat: no-repeat;
+			background-position-x: 95%;
+			background-position-y: center
+		}
+	</style>
+
+
+	<div class="card">
+		<div class="row">
+			<div class="col-md-8 cart">
+				<div class="title">
+					<div class="row">
+						<div class="col">
+							<h4>
+								<b>Shopping Cart</b>
+							</h4>
+						</div>
+						<div class="col align-self-center text-right text-muted"></div>
+					</div>
+				</div>
+				{% if items | length > 0 %}
+					{% for item in items %}
+						<div class="row border-top border-bottom">
+							<div class="row main align-items-center">
+								<div class="col-2"><img class="img-fluid" src="{{item.product.image}}"></div>
+								<div class="col">
+									{# {% if item.product.category.name != null %}
+										<div class="row text-muted">{{item.product.category.name}}</div>
+									{% endif %} #}
+									<div class="row">{{item.product.name}}</div>
+								</div>
+								<div class="col">
+									<a href="{{path('cart_delete', {'id':item.product.id})}}">
+										<i class="fa fa-minus-circle" aria-hidden="true"></i>
+									</a>
+									<a href="#" class="border">{{item.quantity}}</a>
+									<a href="{{path('cart_add', {'id':item.product.id})}}">
+										<i class="fa fa-plus-circle" aria-hidden="true"></i>
+									</a>
+								</div>
+								<div class="col">$
+									{{item.product.price * item.quantity}}
+									<span class="close">
+										<a href="{{path('cart_remove', {'id':item.product.id})}}">
+											<i class="fa fa-trash" aria-hidden="true"></i>
+										</a>
+									</span>
+								</div>
+
+							</div>
+						</div>
+					{% endfor %}
+					<div class="back-to-shop">
+						<a href="#" class="btn btn-primary cart-btn-transform m-3 border rounded" data-abc="true">continue shopping</a>
+					</div>
+				</div>
+				<div class="col-md-4 summary">
+					<div>
+						<h5>
+							<b>Summary</b>
+						</h5>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col" style="padding-left:0;">Current Price:</div>
+						<div class="col text-right">$
+							{{total}}</div>
+					</div>
+					<form>
+						<p>SHIPPING</p>
+						<select id="delivery">
+							{% for delivery in delivery %}
+								<option class="text-muted" value="{{delivery.name}}">{{delivery.name}}</option>
+							{% endfor %}
+						</select>
+						<p>GIVE CODE</p>
+						<input id="code" placeholder="Enter your code">
+					</form>
+					<div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+						<div class="col">TOTAL PRICE</div>
+						<div class="col text-right">$
+							{{total}}</div>
+					</div>
+					<a href="{{path('order_add')}}" class="btn btn-primary cart-btn-transform" data-abc="true">ORDER NOW</a>
+				</div>
+			{% else %}
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-body cart">
+								<div class="col-sm-12 empty-cart-cls text-center">
+									<img src="https://www.pngall.com/wp-content/uploads/5/Shopping-Cart-PNG-Image-HD.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+									<h3>
+										<strong>Your Cart is Empty</strong>
+									</h3>
+									<h4>Add something to make you happy :)</h4>
+									<a href="#" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+
 {% endblock %}

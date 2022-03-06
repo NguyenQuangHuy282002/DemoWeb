@@ -45,6 +45,31 @@ class SupplierRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Supplier[] 
+     */
+    public function viewSupplierList()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Supplier[] Returns an array of Author objects
+     */
+    public function searchSupplier($keyword)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.name LIKE :key')
+            ->setParameter('key', '%' . $keyword . '%')
+            ->orderBy('a.name', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Supplier[] Returns an array of Supplier objects
     //  */

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+	<div
+		class="container col-md-6 mt-5 text-center">
+		{# code để hiển thị flash message được gửi từ controller #}
+		<div class="container col-md-4">
+			{% for flash in app.flashes('Success') %}
+				<p class="alert alert-warning">{{ flash }}</p>
+			{% endfor %}
+			{% for flash in app.flashes('Error') %}
+				<p class="alert alert-danger">{{ flash }}</p>
+			{% endfor %}
+		</div>
+		<h1 class="text text-success">Supplier List</h1>
+		<a href="{{ path('supplier_add') }}" class="btn btn-success">Add supplier</a>
+		<div class="form-group col-md-6 mt-3">
+			<form action="{{ path('supplier_search') }}" method="post">
+				<input type="search" name="word" required class="form-control" placeholder="Search supplier name">
+			</form>
+		</div>
+		<table class="table table-primary mt-3">
+			<thead>
+				<tr>
+					<th>Supplier Id</th>
+					<th>Supplier Name</th>
+					<th>Supplier Description</th>
+					<th>Supplier Image</th>
+					<th>Menu</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for supplier in suppliers %}
+					<tr>
+						<td>{{ supplier.id }}</td>
+						<td>{{ supplier.name }}</td>
+						<td>{{ supplier.description }}</td>
+						<td>
+							<a href="{{ path ('supplier_detail', {'id' : supplier.id })}}">
+								<img src="{{ supplier.image }}" width="100" height="100">
+							</a>
+						</td>
+						<td>
+							<a href="{{ path ('supplier_edit', {'id' : supplier.id })}}" class="btn btn-warning">Edit</a>
+							<a href="{{ path ('supplier_delete', {'id' : supplier.id })}}" class="btn btn-danger" onclick="return confirm('Are you sure to delete this supplier ?');">Delete</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

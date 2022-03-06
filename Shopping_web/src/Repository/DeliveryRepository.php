@@ -45,6 +45,32 @@ class DeliveryRepository extends ServiceEntityRepository
         }
     }
 
+
+    /**
+     * @return Delivery[] 
+     */
+    public function viewDeliveryList()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Delivery[] Returns an array of Author objects
+     */
+    public function searchDelivery($keyword)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.name LIKE :key')
+            ->setParameter('key', '%' . $keyword . '%')
+            ->orderBy('a.name', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Delivery[] Returns an array of Delivery objects
     //  */
