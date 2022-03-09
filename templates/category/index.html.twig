@@ -3,7 +3,7 @@
 {% block body %}
 
 <style>
-.category {
+.category_admin {
     margin-top: 10%;
 }
 
@@ -80,47 +80,8 @@ table.table td a.delete {
 table.table td i {
     font-size: 19px;
 }    
-.pagination {
-    float: right;
-    margin: 0 0 5px;
-}
-.pagination li a {
-    border: none;
-    font-size: 95%;
-    width: 30px;
-    height: 30px;
-    color: #999;
-    margin: 0 2px;
-    line-height: 30px;
-    border-radius: 30px !important;
-    text-align: center;
-    padding: 0;
-}
-.pagination li a:hover {
-    color: #666;
-}	
-.pagination li.active a {
-    background: #03A9F4;
-}
-.pagination li.active a:hover {        
-    background: #0397d6;
-}
-.pagination li.disabled i {
-    color: #ccc;
-}
-.pagination li i {
-    font-size: 16px;
-    padding-top: 6px
-}
-.hint-text {
-    float: left;
-    margin-top: 6px;
-    font-size: 95%;
-}    
 </style>
-
-</style>
-<div class="category">
+<div class="category_admin">
     {# page for admin #}
     {% if is_granted('ROLE_ADMIN') %}
     <div class="container col-md-4 mt-5">
@@ -139,8 +100,10 @@ table.table td i {
                         <div class="col-sm-8"><h2>Category List</h2></div>
                         <div class="col-sm-3">
                             <div class="search-box">
+                            <form action="{{ path('category_search') }}" method="post">
                                 <i class="fa fa-search">&#xE8B6;</i>
-                                <input type="text" class="form-control" placeholder="Search category ">
+                                <input type="text" name="word" class="form-control" placeholder="Search category ">
+                            </form>
                             </div>
                         </div>
                         <div class="col-sm-1"><a href="{{path('category_add')}}" class="btn btn-center" id="btnAdd"><i class="fa fa-plus">&#xE8B6;</i></a></div>
@@ -165,7 +128,7 @@ table.table td i {
                             <td>{{c.description}}</td>
                             <td>
                             {% for product in c.products %}
-                                {{product.name}}
+                               <p>- {{product.name}}</p>
                             {% endfor %}
                             </td>
                             <td>

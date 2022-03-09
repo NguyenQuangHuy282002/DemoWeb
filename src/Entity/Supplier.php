@@ -56,8 +56,9 @@ class Supplier
 
     public function setImage( $image): self
     {
-        $this->image = $image;
-
+        if($image != null){
+            $this->image = $image;
+        }
         return $this;
     }
 

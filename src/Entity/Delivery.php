@@ -56,8 +56,9 @@ class Delivery
 
     public function setImage($image)
     {
-        $this->image = $image;
-
+        if($image != null){
+            $this->image = $image;
+        }
         return $this;
     }
 

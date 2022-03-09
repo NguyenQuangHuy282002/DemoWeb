@@ -44,8 +44,10 @@ class CategoryController extends AbstractController
         if ($category == null) {
             $this->addFlash(
                'Error',
-               'category not found'
+               'Category not found'
             );
+        } else if (count($category->getProducts()) > 0) {
+            $this -> addFlash("Error","Can not delete this category !");
         }
         else{
         $manager = $this->getDoctrine()->getManager();
@@ -118,10 +120,21 @@ class CategoryController extends AbstractController
     public function SearchCategory(Request $request, CategoryRepository $repository)
     {
         $name = $request->get('word');
-        $category = $repository->searchCategory($name);
+        $categories = $repository->searchCategory($name);
+        if($categories == null){
+            $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+            $this->addFlash(
+                'Error',
+                'Category not found'
+             );
             return $this->render("category/index.html.twig",
             [
-                'categories' => $category
+                'categories' => $categories
+            ]);
+        }
+            return $this->render("category/index.html.twig",
+            [
+                'categories' => $categories
             ]);
     }
 }

@@ -6,27 +6,20 @@
 {% block body %}
 	<style>
 		/* header */
-
 		#header {
 			background: url('https://images.macrumors.com/t/aguJT3V2LHkU96Satz-IPm9aUis=/2244x/article-new/2022/01/iPhone-14-Mock-Pill-Blue-Feature.jpg') top/cover no-repeat;
 		}
-
 		.carousel-inner h1 {
 			font-size: 60px;
 			font-family: var(--lg-font);
 		}
-
 		.carousel-item .btn {
 			border-color: #fff !important;
 		}
-
 		.carousel-item .btn:hover {
 			border-color: var(--pink) !important;
 		}
-
-
 		/* title */
-
 		.title h2::before {
 			position: absolute;
 			content: "";
@@ -39,20 +32,15 @@
 			-ms-transform: translateY(-50%);
 			transform: translateY(-50%);
 		}
-
-
 		/* collection */
-
 		.active-filter-btn {
 			background-color: var(--pink) !important;
 			color: #fff !important;
 			border-color: var(--pink) !important;
 		}
-
 		.filter-button-group .btn:hover {
 			color: #fff !important;
 		}
-
 		.collection-img span {
 			top: 20px;
 			right: 20px;
@@ -60,69 +48,50 @@
 			height: 46px;
 			border-radius: 50%;
 		}
-
-
 		/* offers */
-
 		#offers {
 			background: url('https://images.samsung.com/vn/smartphones/galaxy-s21-ultra-5g/images/galaxy-s21-ultra-5g-share-image.jpg') center/cover no-repeat;
 		}
-
 		#offers .row {
 			min-height: 60vh;
 		}
-
 		.offers-content span {
 			font-size: 28px;
 		}
-
 		.offers-content h2 {
 			font-size: 60px;
 			font-family: var(--lg-font);
 		}
-
 		.offers-content .btn {
 			border-color: transparent !important;
 		}
-
-
 		/* about */
-
 		#about {
 			background-color: rgba(179, 179, 179, 0.05);
 		}
-
-
 		/* newsletter */
-
 		#newsletter {
 			background-color: rgba(179, 179, 179, 0.05);
 		}
-
 		#newsletter p {
 			max-width: 600px;
 		}
-
 		#newsletter .input-group {
 			max-width: 500px;
 		}
-
 		#newsletter .form-control {
 			border-top-left-radius: 25px;
 			border-bottom-left-radius: 25px;
 		}
-
 		#newsletter .btn {
 			background-color: var(--pink);
 			color: #fff;
 			border-color: var(--pink);
 		}
-
 		#newsletter .btn:hover {
 			background-color: #000;
 			border-color: #000;
 		}
-
 	</style>
 	<!-- header -->
 	<header id="header" class="vh-100 carousel slide" data-bs-ride="carousel" style="padding-top: 104px;">
@@ -377,7 +346,6 @@ resetFilterBtns();
 $(this).addClass('active-filter-btn');
 $grid.isotope({filter: filterValue});
 });
-
 var filterBtns = $('.filter-button-group').find('button');
 function resetFilterBtns() {
 filterBtns.each(function () {

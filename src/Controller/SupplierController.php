@@ -49,10 +49,10 @@ class SupplierController extends AbstractController
     {
         $supplier = $this-> getDoctrine()->getRepository(Supplier::class)-> find($id);
         if ($supplier === null) {
-            $this -> addFlash("ERROR","Supplier not found !");
+            $this -> addFlash("Error","Supplier not found !");
         }
-        else if (count($supplier->getsuppliers()) > 0) {
-            $this -> addFlash("ERROR","Can not delete this supplier !");
+        else if (count($supplier->getBrands()) > 0) {
+            $this -> addFlash("Error","Can not delete this supplier !");
         }
         else{
             $manager =$this -> getDoctrine()->getManager();

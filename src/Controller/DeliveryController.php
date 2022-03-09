@@ -48,10 +48,10 @@ class DeliveryController extends AbstractController
     {
         $delivery = $this-> getDoctrine()->getRepository(Delivery::class)-> find($id);
         if ($delivery === null) {
-            $this -> addFlash("ERROR","Delivery not found !");
+            $this -> addFlash("Error","Delivery not found !");
         }
-        else if (count($delivery->getdeliverys()) > 0) {
-            $this -> addFlash("ERROR","Can not delete this delivery !");
+        else if (count($delivery->getOrders()) > 0) {
+            $this -> addFlash("Error","Can not delete this delivery !");
         }
         else{
             $manager =$this -> getDoctrine()->getManager();

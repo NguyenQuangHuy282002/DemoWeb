@@ -43,16 +43,18 @@ class BrandController extends AbstractController
             ]
         );
     }
-
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/delete/{id}', name: 'brand_delete')]
     public function DeleteBrand($id)
     {
         $brand = $this-> getDoctrine()->getRepository(Brand::class)-> find($id);
         if ($brand === null) {
-            $this -> addFlash("ERROR","Brand not found !");
+            $this -> addFlash("Error","Brand not found !");
         }
-        else if (count($brand->getbrands()) > 0) {
-            $this -> addFlash("ERROR","Can not delete this brand !");
+        else if (count($brand->getProducts()) > 0) {
+            $this -> addFlash("Error","Can not delete this brand !");
         }
         else{
             $manager =$this -> getDoctrine()->getManager();
@@ -62,7 +64,9 @@ class BrandController extends AbstractController
         }
         return $this -> redirectToRoute('brand_index');
     }
-
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/add', name: 'brand_add')]
     public function AddBrand(Request $request)
     {
@@ -95,7 +99,9 @@ class BrandController extends AbstractController
             'brandForm' => $form
         ]);
     }
-
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/edit/{id}', name: 'brand_edit')]
     public function EditBrand(Request $request, $id)
     {
@@ -135,10 +141,21 @@ class BrandController extends AbstractController
     public function SearchBrand(Request $request, BrandRepository $repository)
     {
         $name = $request->get('word');
-        $brand = $repository->searchBrand($name);
+        $brands = $repository->searchBrand($name);
+        if($brands == null){
+            $brands = $this->getDoctrine()->getRepository(Brand::class)->findAll();
+            $this->addFlash(
+                'Error',
+                'Brand not found'
+             );
             return $this->render("brand/index.html.twig",
             [
-                'brands' => $brand
+                'brands' => $brands
             ]);
+        }
+        return $this->render("brand/index.html.twig",
+        [
+            'brands' => $brands
+        ]);
     }
 }

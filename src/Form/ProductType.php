@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class ProductType extends AbstractType
 {
@@ -33,7 +34,11 @@ class ProductType extends AbstractType
             ->add('price', MoneyType::class,
             [
                 'required'=> true,
-                'currency'=>'USD'
+                'currency'=>'USD',
+                'attr' =>
+                [
+                    'min' => 0
+                ]
             ])
             ->add('image',FileType::class,
             [
@@ -44,9 +49,20 @@ class ProductType extends AbstractType
             ->add('description')
             ->add('date', DateType::class,
             [
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'attr' =>
+                [
+                    'max' => date("Y-m-d")
+                ]
             ])
-            ->add('quantity')
+            ->add('quantity', IntegerType::class,
+            [
+                'attr' =>
+                [
+                    'min' => 0,
+                    'max' => 1000
+                ]
+            ])
             ->add('category', EntityType::class,
             [
                 'class' => Category::class,

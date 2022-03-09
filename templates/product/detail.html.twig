@@ -127,6 +127,9 @@
             <div class="product-text">
                 <h1>{{product.name}}</h1>
                 <br>
+                <h2 class=" text text-dark"><b>Category: 
+                    <a style="text-decoration:none" href="{{path('product_detail_catId', {'catId': product.category.id})}}">{{product.category.name|default('Not updated yet')}}</a>
+                </b></h2>
                 <h2>Quantity: {{product.quantity}}</h2>
                 <h2>Date: {{product.date | date('y/m/d')}}</h2>
                 <p>{{product.description}}</p>

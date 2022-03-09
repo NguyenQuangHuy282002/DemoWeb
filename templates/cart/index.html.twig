@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cart{% endblock %}
+{% block title %}Cart
+{% endblock %}
 
 {% block navbar %}{% endblock %}
 
@@ -214,7 +215,7 @@
 					{% for item in items %}
 						<div class="row border-top border-bottom">
 							<div class="row main align-items-center">
-								<div class="col-2"><img class="img-fluid" src="{{asset('images/products/' ~ item.product.image)}}"></div>
+								<div class="col-2"><img class="img-fluid" src="{{asset('images/products/'~item.product.image)}}"></div>
 								<div class="col">
 									{# {% if item.product.category.name != null %}
 										<div class="row text-muted">{{item.product.category.name}}</div>
@@ -243,7 +244,7 @@
 						</div>
 					{% endfor %}
 					<div class="back-to-shop">
-						<a href="{{path('product_index')}}" class="btn btn-primary cart-btn-transform m-3 border rounded" data-abc="true">Continue shopping</a>
+						<a href="#" class="btn btn-primary cart-btn-transform m-3 border rounded" data-abc="true">continue shopping</a>
 					</div>
 				</div>
 				<div class="col-md-4 summary">
@@ -286,7 +287,7 @@
 										<strong>Your Cart is Empty</strong>
 									</h3>
 									<h4>Add something to make you happy :)</h4>
-									<a href="#" class="btn btn-primary cart-btn-transform m-3" data-abc="true">Continue shopping</a>
+									<a href="#" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
 								</div>
 							</div>
 						</div>
