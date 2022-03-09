@@ -10,11 +10,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 #[Route('/cart')]
 class CartController extends AbstractController
 {
+
+
+    /**
+     *  @IsGranted("ROLE_USER");
+     */
     #[Route('/', name: 'cart')]
     public function index(SessionInterface $si, ProductRepository $PR, DeliveryRepository $DR)
     {
@@ -31,7 +37,6 @@ class CartController extends AbstractController
 
 
         $total = 0;
-
         foreach ($cartWithData as $item) {
             $totalItem = $item['product']->getPrice() * $item['quantity'];
             $total += $totalItem;
@@ -49,6 +54,9 @@ class CartController extends AbstractController
     }
 
 
+    /**
+     *  @IsGranted("ROLE_USER");
+     */
     #[Route('/add/{id}', name: 'cart_add')]
     public function cart_add($id, Session $session)
     {
@@ -67,6 +75,9 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart', []);
     }
 
+    /**
+     *  @IsGranted("ROLE_USER");
+     */
     #[Route('/decrease/{id}', name: 'cart_delete')]
     public function cart_decrease($id, Session $session)
     {
@@ -88,6 +99,9 @@ class CartController extends AbstractController
     }
 
 
+    /**
+     *  @IsGranted("ROLE_USER");
+     */
     #[Route('/remove/{id}', name: 'cart_remove')]
     public function cart_remove($id, Session $session)
     {

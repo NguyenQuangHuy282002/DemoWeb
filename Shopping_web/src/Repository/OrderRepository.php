@@ -45,6 +45,29 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
+
+    /**
+     * @return Order[]
+     */
+    public function sortDateAsc()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    /**
+     * @return Order[]
+     */
+
+    public function sortDateDesc()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Order[] Returns an array of Order objects
     //  */

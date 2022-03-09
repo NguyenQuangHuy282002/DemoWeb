@@ -50,7 +50,7 @@ class DeliveryController extends AbstractController
         if ($delivery === null) {
             $this -> addFlash("ERROR","Delivery not found !");
         }
-        else if (count($delivery->getProducts()) > 0) {
+        else if (count($delivery->getdeliverys()) > 0) {
             $this -> addFlash("ERROR","Can not delete this delivery !");
         }
         else{
@@ -69,6 +69,21 @@ class DeliveryController extends AbstractController
         $form = $this -> createForm(DeliveryType::class,$delivery);
         $form -> handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $delivery->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('delivery_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $delivery->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($delivery);
             $manager->flush();
@@ -87,6 +102,21 @@ class DeliveryController extends AbstractController
         $form = $this->createForm(DeliveryType::class, $delivery);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $delivery->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('delivery_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $delivery->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($delivery);
             $manager->flush();

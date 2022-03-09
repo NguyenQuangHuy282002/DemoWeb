@@ -49,17 +49,33 @@ class DetailRepository extends ServiceEntityRepository
       * @return Detail[] Returns an array of Detail objects
       */
     
-    public function findDetailByOID($id)
+      public function findDetailByOID($id)
+      {
+          return $this->createQueryBuilder('d')
+              ->andWhere('d.orders = :val')
+              ->setParameter('val', $id)
+              ->orderBy('d.id', 'ASC')
+              ->getQuery()
+              ->getResult()
+          ;
+      }
+
+    // /**
+    //  * @return Detail[] Returns an array of Detail objects
+    //  */
+    /*
+    public function findByExampleField($value)
     {
         return $this->createQueryBuilder('d')
-            ->andWhere('d.orders = :val')
-            ->setParameter('val', $id)
+            ->andWhere('d.exampleField = :val')
+            ->setParameter('val', $value)
             ->orderBy('d.id', 'ASC')
+            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    
+    */
 
     /*
     public function findOneBySomeField($value): ?Detail

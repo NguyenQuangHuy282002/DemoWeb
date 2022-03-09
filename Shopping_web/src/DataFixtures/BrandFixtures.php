@@ -14,7 +14,7 @@ class BrandFixtures extends Fixture
             $brand = new Brand;
             $brand->setName("Brand $i");
             $brand->setDescription("Local Brand $i");
-            $brand->setImage("https://cf.shopee.vn/file/81b8325d9cd6c1a058c3b58fc65fdf02");
+            $brand->setImage("62248af082334.png");
             $manager->persist($brand);
         }
         $manager->flush();

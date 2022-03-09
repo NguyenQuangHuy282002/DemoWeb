@@ -51,7 +51,7 @@ class BrandController extends AbstractController
         if ($brand === null) {
             $this -> addFlash("ERROR","Brand not found !");
         }
-        else if (count($brand->getProducts()) > 0) {
+        else if (count($brand->getbrands()) > 0) {
             $this -> addFlash("ERROR","Can not delete this brand !");
         }
         else{
@@ -70,6 +70,21 @@ class BrandController extends AbstractController
         $form = $this -> createForm(BrandType::class,$brand);
         $form -> handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $brand->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('brand_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $brand->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($brand);
             $manager->flush();
@@ -88,6 +103,21 @@ class BrandController extends AbstractController
         $form = $this->createForm(BrandType::class, $brand);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $brand->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('brand_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $brand->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($brand);
             $manager->flush();

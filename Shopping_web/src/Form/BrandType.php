@@ -6,6 +6,8 @@ use App\Entity\Brand;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BrandType extends AbstractType
 {
@@ -14,7 +16,13 @@ class BrandType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('image')
+            ->add('image',FileType::class,
+            [
+                'data_class' => null,
+                'required' => is_null($builder->getData()->getImage()),
+
+            ])
+            ->add('Submit', SubmitType::class)
         ;
     }
 

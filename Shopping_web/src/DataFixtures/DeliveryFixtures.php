@@ -10,11 +10,11 @@ class DeliveryFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $delivery = new Delivery;
-            $delivery->setName("Delivery $i");
-            $delivery->setDescription("Delivery $i");
-            $delivery->setImage("https://image.shutterstock.com/image-vector/delivery-courier-carrying-packages-truck-260nw-1897067275.jpg");
+            $delivery->setName("Grab Delivery $i");
+            $delivery->setDescription("Grab Holdings Limited operates a transportation and fintech platform in Southeast Asia.");
+            $delivery->setImage("Grab_Logo_2021.jpeg");
             $manager->persist($delivery);
         }
         $manager->flush();

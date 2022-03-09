@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Brand;
 use App\Entity\Product;
+use App\Entity\Category;
 use App\Form\ProductType;
+use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -18,14 +22,20 @@ class ProductController extends AbstractController
     public function ViewAllProduct()
     {
         $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
         return $this->render('product/index.html.twig',[
-            'products'=> $products
+            'products'=> $products,
+            'brands'=> $brands,
+            'categories'=> $categories
         ]);
     }
     //View product by id
     #[Route('/detail/{id}', name: 'product_detail')]
     public function ViewProductById($id)
     {
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
         if ($product == null) {
             $this->addFlash(
@@ -35,10 +45,36 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('product_index');
         }
         return $this->render('product/detail.html.twig',[
-            'product'=>$product
+            'product'=>$product,
+            'brands'=> $brands,
+            'categories'=> $categories
+        ]);
+    }
+    //View product by category
+
+    #[Route('/detail/{catId}', name: 'product_detail_catId')]
+    public function ViewProductByCatId($catId)
+    {
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
+        $product = $this->getDoctrine()->getRepository(Product::class)->find($catId);
+        if ($product == null) {
+            $this->addFlash(
+               'Error',
+               'Product not found'
+            );
+            return $this->redirectToRoute('product_index');
+        }
+        return $this->render('product/index.html.twig',[
+            'product'=>$product,
+            'brands'=> $brands,
+            'categories'=> $categories
         ]);
     }
     // Delete product
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/delete/{id}', name: 'product_delete')]
     public function DeleteProduct($id)
     {
@@ -58,6 +94,9 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('product_index');
     }
     //Add new product
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/add', name: 'product_add')]
     public function AddProduct(Request $request)
     {
@@ -66,7 +105,21 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $product->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('product_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $product->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($product);
             $manager->flush();
@@ -79,6 +132,9 @@ class ProductController extends AbstractController
         ]);
     }
     //Edit product
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/edit/{id}', name: 'product_edit')]
     public function EditProduct(Request $request, $id)
     {
@@ -86,6 +142,21 @@ class ProductController extends AbstractController
         $form = $this->createForm(ProductType::class,$product);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $product->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('product_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $product->setImage($imageName);
+            }
             
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($product);
@@ -96,5 +167,47 @@ class ProductController extends AbstractController
         [
             'productform' => $form
         ]);
+    }
+
+    #[Route("/asc",name:"sort_asc_product")]
+    public function ascName(ProductRepository $repository) {
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
+        $products = $repository->sortProductAsc();
+        return $this->render('product/index.html.twig',[
+            'products'=> $products,
+            'brands' => $brands,
+            'categories' => $categories
+        ]);
+    }
+
+
+    #[Route("/desc",name:"sort_desc_product")]
+    public function descName(ProductRepository $repository) {
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
+        $products = $repository->sortProductDesc();
+        return $this->render('product/index.html.twig',[
+            'products'=> $products,
+            'brands' => $brands,
+            'categories' => $categories
+        ]);
+        
+    }
+
+    #[Route('/search', name: 'product_search')]
+    public function SearchProduct(Request $request, ProductRepository $repository)
+    {
+
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
+        $name = $request->get('word');
+        $product = $repository->searchProduct($name);
+            return $this->render("product/index.html.twig",
+            [
+                'products' => $product,
+                'brands' => $brands,
+                'categories' => $categories
+            ]);
     }
 }

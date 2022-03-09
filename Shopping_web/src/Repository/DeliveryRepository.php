@@ -71,22 +71,22 @@ class DeliveryRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    // /**
-    //  * @return Delivery[] Returns an array of Delivery objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Delivery Returns Delivery objects
+    */
+    
+    public function getNameDelivery($value)
     {
         return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('d.name = :val')
+            ->setParameter('val',  $value)
             ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(1)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Delivery

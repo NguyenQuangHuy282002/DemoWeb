@@ -1,22 +1,22 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}HKH Shop!
 			{% endblock %}
 		</title>
-		{# Run `composer require symfony/webpack-encore-bundle`
-																				           and uncomment the following Encore helpers to start using Symfony UX #}
+		{# Run 'composer require symfony/webpack-encore-bundle' and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
 
 			<link
 			rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-			<!----======== CSS ======== -->
+			<!--  ======== CSS ======== -->
 			<link rel="stylesheet" href="../assets/styles/layout.css">
 			<link
 			rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-			<!----===== Boxicons CSS ===== -->
+			<!--  ===== Boxicons CSS ===== -->
 			<link
 			href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 
@@ -31,6 +31,14 @@
 			<!-- Latest compiled JavaScript -->
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js" integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		{% endblock %}
 
 		{% block javascripts %}
@@ -57,6 +65,7 @@
 
 			.btn:not(.nav-btns button) {
 				background-color: #fff;
+				
 				color: rgb(85, 85, 85);
 				padding: 10px 28px;
 				border-radius: 25px;
@@ -67,6 +76,11 @@
 				background-color: var(--pink);
 				color: #fff;
 				border-color: var(--pink);
+			}
+			
+			.btn a{
+				color: rgb(85, 85, 85);
+				text-decoration:none;
 			}
 
 
@@ -100,7 +114,9 @@
 			.nav-item {
 				border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
 			}
+			
 		</style>
+			
 	</head>
 	<body>
 		{% block navbar %}
@@ -109,23 +125,36 @@
 			<nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
 				<div class="container">
 					<a
-						class="navbar-brand d-flex justify-content-between align-items-center order-lg-0" href="index.html">
+						class="navbar-brand d-flex justify-content-between align-items-center order-lg-0" href="{{path('homepage')}}}">
 						<!--<img src = "images/shopping-bag-icon.png" alt = "site icon">-->
 						<span class="text-uppercase fw-lighter ms-2">HKH</span>
 					</a>
 
 					<div class="order-lg-2 nav-btns">
+						
+					
 						<button type="button" class="btn position-relative">
+							<form action="{{ path('product_search') }}" method="post">
+							<input type="search" name="word" id="search" placeholder="Search..." />
+							<i class="fa fa-search"></i>
+							</form>
+						</button>
+
+						<a type="button" href="{{path('cart')}}" class="btn position-relative">
 							<i class="fa fa-shopping-cart"></i>
 							<span class="position-absolute top-0 start-100 translate-middle badge bg-primary">5</span>
-						</button>
+						</a>
+					 	{% if app.user %}
 						<button type="button" class="btn position-relative">
-							<i class="fa fa-heart"></i>
-							<span class="position-absolute top-0 start-100 translate-middle badge bg-primary">2</span>
+							<a href="{{path('app_logout')}}">Logout</a>
 						</button>
+
+						{% else %}
 						<button type="button" class="btn position-relative">
-							<i class="fa fa-search"></i>
+							<a href="{{path('app_login')}}">Login</a>
 						</button>
+						{% endif %}
+						
 					</div>
 
 					<button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -135,31 +164,59 @@
 					<div class="collapse navbar-collapse order-lg-1" id="navMenu">
 						<ul class="navbar-nav mx-auto text-center">
 							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="#header">home</a>
+								<a class="nav-link text-uppercase text-dark" href="{{path('homepage')}}">Home</a>
 							</li>
 							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="#collection">Products</a>
+								<a class="nav-link text-uppercase text-dark" href="{{path('product_index')}}">Shop</a>
+							</li>
+							{# page for admin #}
+							{% if is_granted('ROLE_ADMIN') %}
+							<li class="nav-item px-2 py-2">
+								<a class="nav-link text-uppercase text-dark" href="{{path('category_index')}}">Category</a>
 							</li>
 							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="#special">Brands</a>
+								<a class="nav-link text-uppercase text-dark" href="{{path('brand_index')}}">Brand</a>
 							</li>
 							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="#blogs">Suppliers</a>
+								<a class="nav-link text-uppercase text-dark" href="{{path('delivery_index')}}">Delivery</a>
 							</li>
 							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="#about">Popular</a>
+								<a class="nav-link text-uppercase text-dark" href="{{path('supplier_index')}}">Supplier</a>
+							</li>		
+							{% else %}
+							<li class="nav-item dropdown px-2 py-2">
+								<a class="nav-link dropdown-toggle text-uppercase text-dark" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Category
+								</a>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+								{% for category in categories %}
+								
+									<li><a class="dropdown-item" href="{{path('product_detail_catId', {'catId': category.id})}}">{{category.name}}</a></li>
+								{% endfor %}
+								</ul>
 							</li>
-							<li class="nav-item px-2 py-2 border-0">
-								<a class="nav-link text-uppercase text-dark" href="#popular"></a>
+
+							<li class="nav-item dropdown px-2 py-2">
+								<a class="nav-link dropdown-toggle text-uppercase text-dark" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Brand
+								</a>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+								{% for brand in brands %}
+									<li><a class="dropdown-item" href="#">{{brand.name}}</a></li>
+								{% endfor %}
+								</ul>
+							</li>
+							{% endif %}
+							<li class="nav-item px-2 py-2">
+								<a class="nav-link text-uppercase text-dark" href="#blogs">User</a>
 							</li>
 						</ul>
 					</div>
 				</div>
 			</nav>
 			<!-- end of navbar -->
-
-
 		{% endblock %}
+
 		{% block body %}{% endblock %}
 
 		{% block footer %}
@@ -266,5 +323,6 @@
 		<script src="assets/js/script.js"></script>
 		<!-- jquery -->
 		<script src="js/jquery-3.6.0.js"></script>
+		
 	</body>
-</html></body></html>
+</html>

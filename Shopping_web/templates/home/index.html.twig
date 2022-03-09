@@ -62,30 +62,6 @@
 		}
 
 
-		/* special */
-
-		.special-img span {
-			top: 20px;
-			right: 20px;
-		}
-
-		.special-list .btn {
-			padding: 8px 20px !important;
-		}
-
-		.special-img img {
-			-webkit-transition: all 0.3s ease;
-			-o-transition: all 0.3s ease;
-			transition: all 0.3s ease;
-		}
-
-		.special-img:hover img {
-			-webkit-transform: scale(1.2);
-			-ms-transform: scale(1.2);
-			transform: scale(1.2);
-		}
-
-
 		/* offers */
 
 		#offers {
@@ -147,6 +123,80 @@
 			border-color: #000;
 		}
 
+
+		{
+			# _________________CSS for carousel product_____________________ #
+		}
+		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500 &display=swap');
+		body {
+			font-family: 'Poppins', sans-serif;
+		}
+
+		.productz-item {
+			border: 1px solid rgb(219, 219, 219);
+		}
+
+		.productz-img {
+			position: relative;
+			overflow: hidden;
+		}
+
+		.btnz {
+			position: absolute;
+			left: 0;
+			bottom: -100%;
+			font-size: 15px;
+			font-weight: 300;
+			transition: all 0.3s ease-in-out;
+		}
+
+		.btnz a {
+			border: none;
+			background-color: rgb(39, 39, 39);
+			color: #fff;
+			transition: all 0.3s ease-in-out;
+		}
+
+		.btnz a:hover {
+			color: #fcb941;
+		}
+
+		.productz-img:hover .btnz {
+			bottom: 0;
+		}
+
+		.heart-icon {
+			position: absolute;
+			top: 16px;
+			right: 15px;
+			font-size: 18px;
+		}
+
+		.productz-type {
+			font-size: 13px;
+			opacity: 0.8;
+		}
+
+		.productz-name {
+			transition: all 0.3s ease-in-out;
+		}
+
+		.productz-name:hover {
+			color: #fcb941 !important;
+		}
+
+		.productz-price {
+			color: #fcb941;
+		}
+
+		.ratingz {
+			font-size: 13px;
+		}
+
+		.productz-item {
+			width: 300px;
+		}
+
 	</style>
 	<!-- header -->
 	<header id="header" class="vh-100 carousel slide" data-bs-ride="carousel" style="padding-top: 104px;">
@@ -189,87 +239,20 @@
 
 				<div class="collection-list mt-4 row gx-0 gy-3">
 					{% for product in products %}
-						{% if product.price > 250 %}
+						{% if product.price > 450 %}
 							<div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
 								<div class="collection-img position-relative">
-									<img src="{{product.image }}" class="w-100">
+									<a href="{{path('product_detail', {'id': product.id})}}"><img src="{{asset('images/products/' ~ product.image)}}" class="w-100"></a>
 									<span class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
 								</div>
 								<div class="text-center">
 									<div class="rating mt-3">
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-									</div>
-									<p class="text-capitalize my-1">{{product.name }}</p>
-									<span class="fw-bold">$
-										{{product.price}}</span>
-								</div>
-							</div>
-						{% elseif product.price < 250  and product.price >175%}
-							<div class="col-md-6 col-lg-4 col-xl-3 p-2 feat">
-								<div class="collection-img position-relative">
-									<img src="{{product.image }}" class="w-100">
-									<span class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
-								</div>
-								<div class="text-center">
-									<div class="rating mt-3">
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-									</div>
-									<p class="text-capitalize my-1">{{product.name }}</p>
-									<span class="fw-bold">$
-										{{product.price}}</span>
-								</div>
-							</div>
-						{% else %}
-							<div class="col-md-6 col-lg-4 col-xl-3 p-2 new">
-								<div class="collection-img position-relative">
-									<img src="{{product.image }}" class="w-100">
-									<span class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
-								</div>
-								<div class="text-center">
-									<div class="rating mt-3">
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
+										{% set rand = random(2,5) %}
+										{% for i in 1 .. rand %}
+											<span class="text-primary">
+												<i class="fas fa-star"></i>
+											</span>
+										{% endfor %}
 									</div>
 									<p class="text-capitalize my-1">{{product.name }}</p>
 									<span class="fw-bold">$
@@ -278,44 +261,11 @@
 							</div>
 						{% endif %}
 					{% endfor %}
-
-
 				</div>
 			</div>
 		</div>
 	</section>
 	<!-- end of collection -->
-
-	<!-- special products -->
-	<section id="special" class="py-5">
-		<div class="container">
-			<div class="title text-center py-5">
-				<h2 class="position-relative d-inline-block">Special Selection</h2>
-			</div>
-
-			<div class="special-list row g-0">
-            {% for product in products %}
-                {% if product.price > 350 %}
-                    <div class="col-md-6 col-lg-4 col-xl-3 p-2">
-					<div class="special-img position-relative overflow-hidden">
-						<img src="{{product.image }}" class="w-100">
-						<span class="position-absolute d-flex align-items-center justify-content-center text-primary fs-4">
-							<i class="fas fa-heart"></i>
-						</span>
-					</div>
-					<div class="text-center">
-						<p class="text-capitalize mt-3 mb-1">{{product.name }}t</p>
-						<span class="fw-bold d-block">$ {{product.price}}</span>
-						<a href="{{path('cart_add',{'id':product.id})}}" class="btn btn-primary mt-3">Add to Cart</a>
-					</div>
-				</div>
-                {% endif %}
-            {% endfor %}			
-				
-			</div>
-		</div>
-	</section>
-	<!-- end of special products -->
 
 	<!-- blogs -->
 	<section id="offers" class="py-5">
@@ -330,9 +280,58 @@
 		</div>
 	</section>
 	<!-- end of blogs -->
+	<div class="row my-5">
+		<h1 class="text-center">Featured Products</h1>
+		<p class="fw-light w-75 mx-auto text-center">List of Favorite Products</p>
+	</div>
+	{% for product in products %}
+		<div class="row g-4 my-5 mx-auto owl-carousel owl-theme">
+			<div class="col productz-item mx-auto">
+				<div class="productz-img">
+					<img src="{{asset('images/products/' ~ product.image)}}" alt="" class="img-fluid d-block mx-auto">
+					<span class="heart-icon">
+						<i class="far fa-heart"></i>
+					</span>
+					<div class="row btnz w-100 mx-auto text-center">
+						<a href="{{path('cart_add',{'id':product.id})}}" type="button" class="col-6 py-2">
+							<i class="fa fa-cart-plus"></i>
+							Add to Cart
+						</a>
+						<a href="{{path('product_detail', {'id': product.id})}}" type="button" class="col-6 py-2">
+							<i class="fa fa-binoculars"></i>
+							View
+						</a>
+					</div>
+				</div>
 
-	<!-- blogs -->
-	<section id="blogs" class="py-5">
+				<div
+					class="productz-info p-3">
+					{# <span class="productz-type">Electronics & Accessories</span> #}
+					<a href="#" class="d-block text-dark text-decoration-none py-2 productz-name">{{product.name}}</a>
+					<span class="productz-price">$
+						{{product.price}}</span>
+					<div class="ratingz d-flex mt-1">
+						<span>
+							<i class="fa fa-star"></i>
+						</span>
+						<span>
+							<i class="fa fa-star"></i>
+						</span>
+						<span>
+							<i class="fa fa-star"></i>
+						</span>
+						<span>
+							<i class="fa fa-star"></i>
+						</span>
+						<span>
+							<i class="fa fa-star"></i>
+						</span>
+						<span>(25 reviews)</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}<!-- blogs --><section id="blogs" class="py-5">
 		<div class="container">
 			<div class="title text-center py-5">
 				<h2 class="position-relative d-inline-block">Our Latest Blog</h2>
@@ -347,7 +346,7 @@
 						<p class="card-text">
 							<small class="text-muted">
 								<span class="fw-bold">Author:
-								</span>Danchoi
+								</span>NoName
 							</small>
 						</p>
 						<a href="#" class="btn">Read More</a>
@@ -362,7 +361,7 @@
 						<p class="card-text">
 							<small class="text-muted">
 								<span class="fw-bold">Author:
-								</span>Danchoi
+								</span>NoName
 							</small>
 						</p>
 						<a href="#" class="btn">Read More</a>
@@ -377,7 +376,7 @@
 						<p class="card-text">
 							<small class="text-muted">
 								<span class="fw-bold">Author:
-								</span>Danchoi
+								</span>NoName
 							</small>
 						</p>
 						<a href="#" class="btn">Read More</a>
@@ -385,11 +384,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
-	<!-- end of blogs -->
-
-	<!-- about us -->
-	<section id="about" class="py-5">
+	</section><!-- end of blogs --><!-- about us --><section id="about" class="py-5">
 		<div class="container">
 			<div class="row gy-lg-5 align-items-center">
 				<div class="col-lg-6 order-lg-1 text-center text-lg-start">
@@ -404,11 +399,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
-	<!-- end of about us -->
-
-	<!-- popular -->
-	<section id="popular" class="py-5">
+	</section><!-- end of about us --><!-- popular --><section id="popular" class="py-5">
 		<div class="container">
 			<div class="title text-center pt-3 pb-5">
 				<h2 class="position-relative d-inline-block ms-4">Popular Of This Year</h2>
@@ -470,11 +461,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
-	<!-- end of popular -->
-
-	<!-- newsletter -->
-	<section id="newsletter" class="py-5">
+	</section><!-- end of popular --><!-- newsletter --><section id="newsletter" class="py-5">
 		<div class="container">
 			<div class="d-flex flex-column align-items-center justify-content-center">
 				<div class="title text-center pt-3 pb-5">
@@ -488,8 +475,28 @@
 				</div>
 			</div>
 		</div>
-	</section>
-	<!-- end of newsletter -->
+	</section><!-- end of newsletter --><script>
+		$('.owl-carousel').owlCarousel({
+loop: true,
+margin: 0,
+responsiveClass: true,
+responsive: {
+0: {
+items: 1
+},
+768: {
+items: 2
+},
+1100: {
+items: 3
+},
+1400: {
+items: 4,
+loop: false
+}
+}
+});
+	</script>
 	<script>
 		// init Isotope
 var $grid = $('.collection-list').isotope({ // options
@@ -508,7 +515,5 @@ filterBtns.each(function () {
 $(this).removeClass('active-filter-btn');
 });
 }
-	</script>
-	<!-- jquery -->
-	<script src="js/jquery-3.6.0.js"></script>
+	</script><!-- jquery --><script src="js/jquery-3.6.0.js"></script>
 {% endblock %}

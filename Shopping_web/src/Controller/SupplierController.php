@@ -51,7 +51,7 @@ class SupplierController extends AbstractController
         if ($supplier === null) {
             $this -> addFlash("ERROR","Supplier not found !");
         }
-        else if (count($supplier->getProducts()) > 0) {
+        else if (count($supplier->getsuppliers()) > 0) {
             $this -> addFlash("ERROR","Can not delete this supplier !");
         }
         else{
@@ -70,6 +70,21 @@ class SupplierController extends AbstractController
         $form = $this -> createForm(SupplierType::class,$supplier);
         $form -> handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $supplier->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('supplier_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $supplier->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($supplier);
             $manager->flush();
@@ -88,6 +103,21 @@ class SupplierController extends AbstractController
         $form = $this->createForm(SupplierType::class, $supplier);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $supplier->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('supplier_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $supplier->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($supplier);
             $manager->flush();

@@ -25,7 +25,6 @@
 				<tr>
 					<th>Delivery Id</th>
 					<th>Delivery Name</th>
-					<th>Delivery Description</th>
 					<th>Delivery Image</th>
 					<th>Menu</th>
 				</tr>
@@ -35,10 +34,9 @@
 					<tr>
 						<td>{{ delivery.id }}</td>
 						<td>{{ delivery.name }}</td>
-						<td>{{ delivery.description }}</td>
 						<td>
 							<a href="{{ path ('delivery_detail', {'id' : delivery.id })}}">
-								<img src="{{ delivery.image }}" width="100" height="100">
+								<img src="{{asset('images/delivery/' ~ delivery.image)}}" width="100" height="100">
 							</a>
 						</td>
 						<td>
