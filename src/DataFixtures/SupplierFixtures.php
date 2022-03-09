@@ -13,7 +13,7 @@ class SupplierFixtures extends Fixture
         for ($i = 1; $i <= 10; $i++) {
             $supplier = new Supplier;
             $supplier->setName("Supplier $i");
-            $supplier->setDescription("Local Supplier $i");
+            $supplier->setDescription(" U.S. Gaming Supplies Inc. is located in Coral Springs, FL, United States and is part of the Miscellaneous Durable Goods Merchant Wholesalers Industry. U.S");
             $supplier->setImage("package.jpeg");
             $manager->persist($supplier);
         }

@@ -54,7 +54,7 @@ class Delivery
         return $this->image;
     }
 
-    public function setImage(sring $image): self
+    public function setImage($image)
     {
         $this->image = $image;
 

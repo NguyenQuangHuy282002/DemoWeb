@@ -12,8 +12,8 @@ class DeliveryFixtures extends Fixture
     {
         for ($i = 1; $i <= 10; $i++) {
             $delivery = new Delivery;
-            $delivery->setName("Delivery $i");
-            $delivery->setDescription("Delivery $i");
+            $delivery->setName("Grab Delivery $i");
+            $delivery->setDescription("Grab Holdings Limited operates a transportation and fintech platform in Southeast Asia.");
             $delivery->setImage("Grab_Logo_2021.jpeg");
             $manager->persist($delivery);
         }

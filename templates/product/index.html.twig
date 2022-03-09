@@ -1,86 +1,145 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container col-md-6 mt-5">
-    <div class="container col-md-4 mt-5">
-    {% for flash in app.flashes('Success') %}
-        <p class="alert alert-primary">{{flash}}</p>
-    {% endfor %}
-     {% for flash in app.flashes('Error') %}
-        <p class="alert alert-danger">{{flash}}</p>
-    {% endfor %}
-    </div>
-    <h1 class="text text-primary text-center">Product list</h1>
-    {# page for admin #}
+
+<style>
+/* special section in user page */
+
+    #special  {
+        margin-top: 5%;
+    }
+    .special-img span {
+        top: 20px;
+        right: 20px;
+    }
+
+    .special-list .btn {
+        padding: 8px 20px !important;
+    }
+
+    .special-img img {
+        -webkit-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+
+    .special-img:hover img {
+        -webkit-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+        transform: scale(1.2);
+    }
+
+{# dropdown #}
+
+    .dropdown {
+        float: right;
+    }
+
+    .title h2{
+       margin-left: 15%
+    }
+
+
+</style>
+
+{# page for admin #}
     {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{path('product_add')}}" class="btn btn-success btn-center">Add new product</a>
-    <div class="form-group col-md-6 mt-3">
-        <form action="{{ path('product_search') }}" method="post">
-            <input type="search" name="word" required class="form-control" placeholder="Search product name">
-        </form>
-    </div>
-    <table class="table table-primary">
-        <thead>
-        <tr>
-            <th>Product ID</th>
-            <th>
-            <a href="{{path('sort_asc_product')}}"><img src="{{asset('images/up.png')}}" width="10" height="10"></a>      
-            Product name   
-            <a href="{{path('sort_desc_product')}}"><img src="{{asset('images/down.png')}} " width="10" height="10"></a>
-            </th>
-            
-            <th>Image</th>
-            <th>Menu</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for p in products %}
-            <tr>
-                <td>{{p.id}}</td>
-                <td>{{p.name}}</td>
 
-                <td>
-                <a href="{{path('product_detail', {'id': p.id})}}"><img src="{{asset('images/products/' ~ p.image)}}" width="200" height = "200"></a>
-                </td>
-                <td>
-                    <a href="{{path('product_edit', {'id':p.id})}}" class="btn btn-danger">Edit</a>
-                    <a href="{{path('product_delete', {'id':p.id})}}" class="btn btn-warning"
-                    onclick="return confirm('do you want to delete?')">Delete</a>
+    <div class="container col-md-6 mt-5">
 
-                </td>
-            </tr>
+        <div class="container col-md-4 mt-5">
+        {% for flash in app.flashes('Success') %}
+            <p class="alert alert-primary">{{flash}}</p>
         {% endfor %}
-        </tbody>
-    </table>
+        {% for flash in app.flashes('Error') %}
+            <p class="alert alert-danger">{{flash}}</p>
+        {% endfor %}
+        </div>
+
+        <h1 class="text text-primary text-center">Product list</h1>
+        <br>
+        <a href="{{path('product_add')}}" class="btn btn-success btn-center">Add new product</a>
+        <div class="form-group col-md-6 mt-3">
+            <form action="{{ path('product_search') }}" method="post">
+                <input type="search" name="word" required class="form-control" placeholder="Search product name">
+            </form>
+        </div>
+        <br>
+        <table class="table table-primary">
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>
+                <a href="{{path('sort_asc_product')}}"><img src="{{asset('images/up.png')}}" width="10" height="10"></a>      
+                Product name   
+                <a href="{{path('sort_desc_product')}}"><img src="{{asset('images/down.png')}} " width="10" height="10"></a>
+                </th>
+                
+                <th>Image</th>
+                <th>Menu</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for p in products %}
+                <tr>
+                    <td>{{p.id}}</td>
+                    <td>{{p.name}}</td>
+
+                    <td>
+                    <a href="{{path('product_detail', {'id': p.id})}}"><img src="{{asset('images/products/' ~ p.image)}}" width="200" height = "200"></a>
+                    </td>
+                    <td>
+                        <a href="{{path('product_edit', {'id':p.id})}}" class="btn btn-danger">Edit</a>
+                        <a href="{{path('product_delete', {'id':p.id})}}" class="btn btn-warning"
+                        onclick="return confirm('do you want to delete?')">Delete</a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {# page for user #}
     {% else %}
-    <table class="table table-primary">
-        <thead>
-        <tr>
-            <th>Product ID</th>
-            <th>
-            <a href="{{path('sort_asc_product')}}"><img src="{{asset('images/up.png')}}" width="10" height="10"></a>      
-            Product name   
-            <a href="{{path('sort_desc_product')}}"><img src="{{asset('images/down.png')}} " width="10" height="10"></a>
-            </th>
-            
-            <th>Image</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for p in products %}
-            <tr>
-                <td>{{p.id}}</td>
-                <td>{{p.name}}</td>
-
-                <td>
-                <a href="{{path('product_detail', {'id': p.id})}}"><img src="{{asset('images/products/' ~ p.image)}}" width="200" height = "200"></a>
-                </td>
+    <!-- special products -->
+	<section id="special" class="py-5">
+		<div class="container">
+			<div class="title text-center py-5">
+				<h2 class="position-relative d-inline-block">Product list</h2>
+			
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Sort By Name
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="{{path('sort_asc_product')}}">Ascending</a></li>
+                        <li><a class="dropdown-item" href="{{path('sort_desc_product')}}">Descending</a></li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+			<div class="special-list row g-0">
+            {% for product in products %}
                 
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <div class="col-md-6 col-lg-4 col-xl-3 p-2">
+					<div class="special-img position-relative overflow-hidden">
+						<a href="{{path('product_detail', {'id': product.id})}}"><img src="{{ asset('images/products/' ~ product.image )}}" class="w-100"></a>
+						<span class="position-absolute d-flex align-items-center justify-content-center text-primary fs-4">
+							<i class="fas fa-heart"></i>
+						</span>
+					</div>
+					<div class="text-center">
+						<p class="text-capitalize mt-3 mb-1">{{product.name }}</p>
+						<span class="fw-bold d-block">$ {{product.price}}</span>
+						<a href="{{path('cart_add',{'id':product.id})}}" class="btn btn-primary mt-3">Add to Cart</a>
+					</div>
+				</div>
+                
+            {% endfor %}			
+				
+			</div>
+		</div>
+	</section>
+	<!-- end of special products -->
     {% endif %}
-</div>
 {% endblock %}

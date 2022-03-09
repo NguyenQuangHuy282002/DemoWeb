@@ -1,7 +1,390 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Hello HomeController!
+{% endblock %}
 
 {% block body %}
-<h1 class="text text-success text-center">Trang home ae design sau</h1>
+	<style>
+		/* header */
+
+		#header {
+			background: url('https://images.macrumors.com/t/aguJT3V2LHkU96Satz-IPm9aUis=/2244x/article-new/2022/01/iPhone-14-Mock-Pill-Blue-Feature.jpg') top/cover no-repeat;
+		}
+
+		.carousel-inner h1 {
+			font-size: 60px;
+			font-family: var(--lg-font);
+		}
+
+		.carousel-item .btn {
+			border-color: #fff !important;
+		}
+
+		.carousel-item .btn:hover {
+			border-color: var(--pink) !important;
+		}
+
+
+		/* title */
+
+		.title h2::before {
+			position: absolute;
+			content: "";
+			width: 4px;
+			height: 50px;
+			background-color: var(--pink);
+			left: -20px;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
+
+
+		/* collection */
+
+		.active-filter-btn {
+			background-color: var(--pink) !important;
+			color: #fff !important;
+			border-color: var(--pink) !important;
+		}
+
+		.filter-button-group .btn:hover {
+			color: #fff !important;
+		}
+
+		.collection-img span {
+			top: 20px;
+			right: 20px;
+			width: 46px;
+			height: 46px;
+			border-radius: 50%;
+		}
+
+
+		/* offers */
+
+		#offers {
+			background: url('https://images.samsung.com/vn/smartphones/galaxy-s21-ultra-5g/images/galaxy-s21-ultra-5g-share-image.jpg') center/cover no-repeat;
+		}
+
+		#offers .row {
+			min-height: 60vh;
+		}
+
+		.offers-content span {
+			font-size: 28px;
+		}
+
+		.offers-content h2 {
+			font-size: 60px;
+			font-family: var(--lg-font);
+		}
+
+		.offers-content .btn {
+			border-color: transparent !important;
+		}
+
+
+		/* about */
+
+		#about {
+			background-color: rgba(179, 179, 179, 0.05);
+		}
+
+
+		/* newsletter */
+
+		#newsletter {
+			background-color: rgba(179, 179, 179, 0.05);
+		}
+
+		#newsletter p {
+			max-width: 600px;
+		}
+
+		#newsletter .input-group {
+			max-width: 500px;
+		}
+
+		#newsletter .form-control {
+			border-top-left-radius: 25px;
+			border-bottom-left-radius: 25px;
+		}
+
+		#newsletter .btn {
+			background-color: var(--pink);
+			color: #fff;
+			border-color: var(--pink);
+		}
+
+		#newsletter .btn:hover {
+			background-color: #000;
+			border-color: #000;
+		}
+
+	</style>
+	<!-- header -->
+	<header id="header" class="vh-100 carousel slide" data-bs-ride="carousel" style="padding-top: 104px;">
+		<div class="container h-100 d-flex align-items-center carousel-inner">
+			<div class="text-center carousel-item active">
+				<h2 class="text-capitalize text-white">IPHONE 14</h2>
+				<h1 class="text-uppercase py-2 fw-bold text-white">Coming Soon</h1>
+				<a href="#" class="btn mt-3 text-uppercase">Order now</a>
+			</div>
+			<div class="text-center carousel-item">
+				<h2 class="text-capitalize text-white">best price & offer</h2>
+				<h1 class="text-uppercase py-2 fw-bold text-white">new season</h1>
+				<a href="#" class="btn mt-3 text-uppercase">buy now</a>
+			</div>
+		</div>
+
+		<button class="carousel-control-prev" type="button" data-bs-target="#header" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon"></span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#header" data-bs-slide="next">
+			<span class="carousel-control-next-icon"></span>
+		</button>
+	</header>
+	<!-- end of header -->
+
+	<!-- Products -->
+	<section id="collection" class="py-5">
+		<div class="container">
+			<div class="title text-center">
+				<h2 class="position-relative d-inline-block">Top Offers</h2>
+			</div>
+
+			<div class="row g-0">
+				<div class="d-flex flex-wrap justify-content-center mt-5 filter-button-group">
+					<button type="button" class="btn m-2 text-dark active-filter-btn" data-filter="*">All</button>
+					<button type="button" class="btn m-2 text-dark" data-filter=".best">Best Sellers</button>
+					<button type="button" class="btn m-2 text-dark" data-filter=".feat">Featured</button>
+					<button type="button" class="btn m-2 text-dark" data-filter=".new">New Arrival</button>
+				</div>
+
+				<div class="collection-list mt-4 row gx-0 gy-3">
+					{% for product in products %}
+						{% if product.price > 450 %}
+							<div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
+								<div class="collection-img position-relative">
+									<a href="{{path('product_detail', {'id': product.id})}}"><img src="{{asset('images/products/' ~ product.image)}}" class="w-100"></a>
+									<span class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
+								</div>
+								<div class="text-center">
+									<div class="rating mt-3">
+									{% set rand = random(2,5) %}
+									{% for i in 1 .. rand %}
+										<span class="text-primary">
+											<i class="fas fa-star"></i>
+										</span>
+									{% endfor %}
+									</div>
+									<p class="text-capitalize my-1">{{product.name }}</p>
+									<span class="fw-bold">$
+										{{product.price}}</span>
+								</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end of collection -->
+
+	<!-- blogs -->
+	<section id="offers" class="py-5">
+		<div class="container">
+			<div class="row d-flex align-items-center justify-content-center text-center justify-content-lg-start text-lg-start">
+				<div class="offers-content">
+					<span class="text-white">Discount Up To 40%</span>
+					<h2 class="mt-2 mb-4 text-white">Tech-Day Sale Offer!</h2>
+					<a href="#" class="btn">Buy Now</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end of blogs -->
+
+	<!-- blogs -->
+	<section id="blogs" class="py-5">
+		<div class="container">
+			<div class="title text-center py-5">
+				<h2 class="position-relative d-inline-block">Our Latest Blog</h2>
+			</div>
+
+			<div class="row g-3">
+				<div class="card border-0 col-md-6 col-lg-4 bg-transparent my-3">
+					<img src="images/blog_1.jpg" alt="">
+					<div class="card-body px-0">
+						<h4 class="card-title">nothing to say</h4>
+						<p class="card-text mt-3 text-muted">Run Out of money</p>
+						<p class="card-text">
+							<small class="text-muted">
+								<span class="fw-bold">Author:
+								</span>Danchoi
+							</small>
+						</p>
+						<a href="#" class="btn">Read More</a>
+					</div>
+				</div>
+
+				<div class="card border-0 col-md-6 col-lg-4 bg-transparent my-3">
+					<img src="images/blog_2.jpg" alt="">
+					<div class="card-body px-0">
+						<h4 class="card-title">nothing to say</h4>
+						<p class="card-text mt-3 text-muted">Run Out of money</p>
+						<p class="card-text">
+							<small class="text-muted">
+								<span class="fw-bold">Author:
+								</span>Danchoi
+							</small>
+						</p>
+						<a href="#" class="btn">Read More</a>
+					</div>
+				</div>
+
+				<div class="card border-0 col-md-6 col-lg-4 bg-transparent my-3">
+					<img src="images/blog_3.jpg" alt="">
+					<div class="card-body px-0">
+						<h4 class="card-title">nothing to say</h4>
+						<p class="card-text mt-3 text-muted">Run Out of money</p>
+						<p class="card-text">
+							<small class="text-muted">
+								<span class="fw-bold">Author:
+								</span>Danchoi
+							</small>
+						</p>
+						<a href="#" class="btn">Read More</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end of blogs -->
+
+	<!-- about us -->
+	<section id="about" class="py-5">
+		<div class="container">
+			<div class="row gy-lg-5 align-items-center">
+				<div class="col-lg-6 order-lg-1 text-center text-lg-start">
+					<div class="title pt-3 pb-5">
+						<h2 class="position-relative d-inline-block ms-4">About Us</h2>
+					</div>
+					<p class="lead text-muted">Nothing special to see here.</p>
+					<p>Waste your time and enjoy</p>
+				</div>
+				<div class="col-lg-6 order-lg-0">
+					<img src="images/about_us.jpg" alt="" class="img-fluid">
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end of about us -->
+
+	<!-- popular -->
+	<section id="popular" class="py-5">
+		<div class="container">
+			<div class="title text-center pt-3 pb-5">
+				<h2 class="position-relative d-inline-block ms-4">Popular Of This Year</h2>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6 col-lg-4 row g-3">
+					<h3 class="fs-5">Top Rated</h3>
+					<div class="d-flex align-items-start justify-content-start">
+						<img src="https://shoptrongnghia.com/wp-content/uploads/2020/06/ps5-o-dia-2.jpg" alt="" class="img-fluid pe-3 w-25">
+						<div>
+							<p class="mb-0">Ps5</p>
+							<span>$ 600</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-lg-4 row g-3">
+					<h3 class="fs-5">Best Selling</h3>
+					<div class="d-flex align-items-start justify-content-start">
+						<img src="https://cdn.tgdd.vn/Products/Images/42/255635/xiaomi-12-pro-1-600x600.jpg" alt="" class="img-fluid pe-3 w-25">
+						<div>
+							<p class="mb-0">Xiaomi note 12 pro</p>
+							<span>$ 456.00</span>
+						</div>
+					</div>
+					<div class="d-flex align-items-start justify-content-start">
+						<img src="https://cdn.tgdd.vn/Products/Images/42/226099/samsung-galaxy-z-fold-2-den-200x200.jpg" alt="" class="img-fluid pe-3 w-25">
+						<div>
+							<p class="mb-0">Samsung z fold 2</p>
+							<span>$ 823.00</span>
+						</div>
+					</div>
+					<div class="d-flex align-items-start justify-content-start">
+						<img src="https://macone.vn/wp-content/uploads/2020/11/macbook-pro-silver-m1-2020.jpeg" alt="" class="img-fluid pe-3 w-25">
+						<div>
+							<p class="mb-0">Macbook pro M1</p>
+							<span>$ 1220.00</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-lg-4 row g-3">
+					<h3 class="fs-5">On Sale</h3>
+					<div class="d-flex align-items-start justify-content-start">
+						<img src="http://img.websosanh.vn/v2/users/root_product/images/dien-thoai-apple-iphone-11-pro/bmottjctrhabs.jpg" alt="" class="img-fluid pe-3 w-25">
+						<div>
+							<p class="mb-0">Iphone 11 Pro Max</p>
+							<span>$ 650.00</span>
+						</div>
+					</div>
+					<div class="d-flex align-items-start justify-content-start">
+						<img src="https://cdn.tgdd.vn/Products/Images/42/220365/huawei-p40-pro-plus-600x600-1-600x600.jpg" alt="" class="img-fluid pe-3 w-25">
+						<div>
+							<p class="mb-0">huawei P40 Pro</p>
+							<span>$ 520.00</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end of popular -->
+
+	<!-- newsletter -->
+	<section id="newsletter" class="py-5">
+		<div class="container">
+			<div class="d-flex flex-column align-items-center justify-content-center">
+				<div class="title text-center pt-3 pb-5">
+					<h2 class="position-relative d-inline-block ms-4">Newsletter Subscription</h2>
+				</div>
+
+				<p class="text-center text-muted">Just waste your time</p>
+				<div class="input-group mb-3 mt-3">
+					<input type="text" class="form-control" placeholder="Enter Your Email ...">
+					<button class="btn btn-primary" type="submit">Subscribe</button>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end of newsletter -->
+	<script>
+		// init Isotope
+var $grid = $('.collection-list').isotope({ // options
+});
+// filter items on button click
+$('.filter-button-group').on('click', 'button', function () {
+var filterValue = $(this).attr('data-filter');
+resetFilterBtns();
+$(this).addClass('active-filter-btn');
+$grid.isotope({filter: filterValue});
+});
+
+var filterBtns = $('.filter-button-group').find('button');
+function resetFilterBtns() {
+filterBtns.each(function () {
+$(this).removeClass('active-filter-btn');
+});
+}
+	</script>
+	<!-- jquery -->
+	<script src="js/jquery-3.6.0.js"></script>
 {% endblock %}

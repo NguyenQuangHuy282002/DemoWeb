@@ -2,14 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Brand;
 use App\Entity\Product;
+use App\Entity\Category;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 #[Route('/product')]
@@ -20,14 +22,20 @@ class ProductController extends AbstractController
     public function ViewAllProduct()
     {
         $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
         return $this->render('product/index.html.twig',[
-            'products'=> $products
+            'products'=> $products,
+            'brands'=> $brands,
+            'categories'=> $categories
         ]);
     }
     //View product by id
     #[Route('/detail/{id}', name: 'product_detail')]
     public function ViewProductById($id)
     {
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
         if ($product == null) {
             $this->addFlash(
@@ -37,7 +45,30 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('product_index');
         }
         return $this->render('product/detail.html.twig',[
-            'product'=>$product
+            'product'=>$product,
+            'brands'=> $brands,
+            'categories'=> $categories
+        ]);
+    }
+    //View product by category
+
+    #[Route('/detail/{catId}', name: 'product_detail_catId')]
+    public function ViewProductByCatId($catId)
+    {
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
+        $product = $this->getDoctrine()->getRepository(Product::class)->find($catId);
+        if ($product == null) {
+            $this->addFlash(
+               'Error',
+               'Product not found'
+            );
+            return $this->redirectToRoute('product_index');
+        }
+        return $this->render('product/index.html.twig',[
+            'product'=>$product,
+            'brands'=> $brands,
+            'categories'=> $categories
         ]);
     }
     // Delete product
@@ -140,18 +171,26 @@ class ProductController extends AbstractController
 
     #[Route("/asc",name:"sort_asc_product")]
     public function ascName(ProductRepository $repository) {
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
         $products = $repository->sortProductAsc();
         return $this->render('product/index.html.twig',[
-            'products'=> $products
+            'products'=> $products,
+            'brands' => $brands,
+            'categories' => $categories
         ]);
     }
 
 
     #[Route("/desc",name:"sort_desc_product")]
     public function descName(ProductRepository $repository) {
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
         $products = $repository->sortProductDesc();
         return $this->render('product/index.html.twig',[
-            'products'=> $products
+            'products'=> $products,
+            'brands' => $brands,
+            'categories' => $categories
         ]);
         
     }
@@ -159,11 +198,16 @@ class ProductController extends AbstractController
     #[Route('/search', name: 'product_search')]
     public function SearchProduct(Request $request, ProductRepository $repository)
     {
+
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
         $name = $request->get('word');
         $product = $repository->searchProduct($name);
             return $this->render("product/index.html.twig",
             [
-                'products' => $product
+                'products' => $product,
+                'brands' => $brands,
+                'categories' => $categories
             ]);
     }
 }
