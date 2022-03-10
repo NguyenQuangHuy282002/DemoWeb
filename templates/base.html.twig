@@ -135,12 +135,16 @@
 							<button type="button" class="btn position-relative">
 								<a href="{{path('app_logout')}}">Logout</a>
 							</button>
+						{# page for manager #}
+						{% elseif is_granted('ROLE_MANAGER') %}
+								<li class="nav-item px-2 py-2">
+									<a class="nav-link text-uppercase text-dark" href="{{path('Order')}}">Order</a>
+								</li>
 						{#pager for user#}
 						{% elseif is_granted('ROLE_USER') %}
-							<button type="button" class="btn position-relative">
-								<i class="fa fa-shopping-cart"></i>
-								<span class="position-absolute top-0 start-100 translate-middle badge bg-primary">5</span>
-							</button>
+							<a type="button" href="{{path('cart')}}" class="btn position-relative">
+							<i class="fa fa-shopping-cart"></i>
+							</a>
 							<button type="button" class="btn position-relative">
 								<a href="{{path('app_logout')}}">Logout</a>
 							</button>
@@ -180,7 +184,7 @@
 								<a class="nav-link text-uppercase text-dark" href="{{path('supplier_index')}}">Supplier</a>
 							</li>	
 							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="#blogs">User</a>
+								<a class="nav-link text-uppercase text-dark" href="{{path('app_user')}}">User</a>
 							</li>	
 							{% elseif is_granted('ROLE_USER') %}
 							{# page for user #}
@@ -201,12 +205,12 @@
 								</a>
 								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 								{% for brand in brands %}
-									<li><a class="dropdown-item" href="#">{{brand.name}}</a></li>
+									<li><a class="dropdown-item" href="{{path('product_detail_brandId', {'brandId': brand.id})}}">{{brand.name}}</a></li>
 								{% endfor %}
 								</ul>
 							</li>
 							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="#blogs">User</a>
+								<a class="nav-link text-uppercase text-dark" href="{{path('app_user')}}">User</a>
 							</li>
 							{% else %}
 							{#page for non-logged in user#}

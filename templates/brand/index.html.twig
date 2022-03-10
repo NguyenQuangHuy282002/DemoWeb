@@ -112,10 +112,12 @@ table.table td i {
                     </div>
                 </div>
                 <table class="table table-striped table-hover table-bordered">
-                    <thead>
+                    <thead style="text-align: center; vertical-align: middle;">
                         <tr>
                             <th>ID</th>
-                            <th>Brand name <i class="fa fa-sort"></i></th>
+                            <th width="200"><a href="{{path('sort_asc_product')}}"><i class="fa fa-angle-up"></i></a>
+                                 Brand name 
+                                <a href="{{path('sort_desc_product')}}"><i class="fa fa-angle-down"></i></a></th>
                             <th>Brand Logo</th>
                             <th>Description</th>
                             <th>Products</th>
@@ -126,8 +128,8 @@ table.table td i {
                     <tbody>
                         {% for b in brands %}
                         <tr>
-                            <td>{{b.id}}</td>
-                            <td>{{b.name}}</td>
+                            <td style="text-align:center;">{{b.id}}</td>
+                            <td style="text-align:center;">{{b.name}}</td>
                             <td><img src="{{asset('images/brands/' ~ b.image)}}" width="100" height="100"></td>
                             <td>{{b.description}}</td>
                             <td>
@@ -136,7 +138,7 @@ table.table td i {
                             {% endfor %}
                             </td>
 							<td>{{b.supplier.name|default('Not updated yet')}}</td>
-                            <td>
+                            <td style="text-align:center;">
                                 <a href="{{path('brand_edit', {'id':b.id})}}" class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
                                 <a href="{{path('brand_delete', {'id':b.id})}}" class="delete" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
                             </td>

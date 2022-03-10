@@ -52,24 +52,50 @@ class ProductController extends AbstractController
     }
     //View product by category
 
-    #[Route('/detail/{catId}', name: 'product_detail_catId')]
-    public function ViewProductByCatId($catId)
+    #[Route('/catID/{catId}', name: 'product_detail_catId')]
+    public function ViewProductByCatId($catId, ProductRepository $repository)
     {
         $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
         $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
-        $product = $this->getDoctrine()->getRepository(Product::class)->find($catId);
-        if ($product == null) {
+        $cat = $this -> getDoctrine()->getRepository(Category::class) ->find($catId);
+        $products = $repository->findProductByCatId($cat);
+        if ($products == null) {
             $this->addFlash(
                'Error',
                'Product not found'
             );
             return $this->redirectToRoute('product_index');
         }
-        return $this->render('product/index.html.twig',[
-            'product'=>$product,
-            'brands'=> $brands,
-            'categories'=> $categories
-        ]);
+            return $this->render("product/index.html.twig",
+            [
+                'products' => $products,
+                'brands' => $brands,
+                'categories' => $categories
+            ]);
+    }
+
+    //View product by brand
+
+    #[Route('/brandID/{brandId}', name: 'product_detail_brandId')]
+    public function ViewProductByBrandId($brandId, ProductRepository $repository)
+    {
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
+        $brand = $this -> getDoctrine()->getRepository(Brand::class) ->find($brandId);
+        $products = $repository->findProductByBrandId($brand);
+        if ($products == null) {
+            $this->addFlash(
+               'Error',
+               'Product not found'
+            );
+            return $this->redirectToRoute('product_index');
+        }
+            return $this->render("product/index.html.twig",
+            [
+                'products' => $products,
+                'brands' => $brands,
+                'categories' => $categories
+            ]);
     }
     // Delete product
     /**

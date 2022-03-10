@@ -215,11 +215,12 @@
 					{% for item in items %}
 						<div class="row border-top border-bottom">
 							<div class="row main align-items-center">
-								<div class="col-2"><img class="img-fluid" src="{{asset('images/products/'~item.product.image)}}"></div>
-								<div class="col">
+								<div class="col-2"><img class="img-fluid" src="{{asset('images/products/' ~ item.product.image)}}"></div>
+								<div
+									class="col">
 									{# {% if item.product.category.name != null %}
-										<div class="row text-muted">{{item.product.category.name}}</div>
-									{% endif %} #}
+																			<div class="row text-muted">{{item.product.category.name}}</div>
+																		{% endif %} #}
 									<div class="row">{{item.product.name}}</div>
 								</div>
 								<div class="col">
@@ -244,7 +245,7 @@
 						</div>
 					{% endfor %}
 					<div class="back-to-shop">
-						<a href="#" class="btn btn-primary cart-btn-transform m-3 border rounded" data-abc="true">continue shopping</a>
+						<a href="{{path('product_index')}}" class="btn btn-primary cart-btn-transform m-3 border rounded" data-abc="true">Continue shopping</a>
 					</div>
 				</div>
 				<div class="col-md-4 summary">
@@ -259,22 +260,23 @@
 						<div class="col text-right">$
 							{{total}}</div>
 					</div>
-					<form>
+					<form action="{{path('order_add')}}" method="POST">
 						<p>SHIPPING</p>
-						<select id="delivery">
+						<select id="delivery" name="delivery">
 							{% for delivery in delivery %}
 								<option class="text-muted" value="{{delivery.name}}">{{delivery.name}}</option>
 							{% endfor %}
 						</select>
-						<p>GIVE CODE</p>
-						<input id="code" placeholder="Enter your code">
+						{# <p>GIVE CODE</p>
+												<input id="code" placeholder="Enter your code"> #}
+						<div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+							<div class="col">TOTAL PRICE</div>
+							<div class="col text-right">$
+								{{total}}</div>
+						</div>
+						<button type="submit" href="{{path('order_add')}}" class="btn btn-primary cart-btn-transform" name="submit" data-abc="true">ORDER NOW</button>
 					</form>
-					<div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-						<div class="col">TOTAL PRICE</div>
-						<div class="col text-right">$
-							{{total}}</div>
-					</div>
-					<a href="{{path('order_add')}}" class="btn btn-primary cart-btn-transform" data-abc="true">ORDER NOW</a>
+
 				</div>
 			{% else %}
 				<div class="row">
@@ -287,7 +289,7 @@
 										<strong>Your Cart is Empty</strong>
 									</h3>
 									<h4>Add something to make you happy :)</h4>
-									<a href="#" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+									<a href="{{ path('homepage')}}" class="btn btn-primary cart-btn-transform m-3" data-abc="true">Continue shopping</a>
 								</div>
 							</div>
 						</div>

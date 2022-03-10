@@ -4,22 +4,34 @@
 {% endblock %}
 
 {% block body %}
+	{# page for admin #}
+	{% if is_granted('ROLE_ADMIN') %}
+	<div class="container">
+	<img src="data:image/png;base64,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" alt=""></div>
+	{% else %}
 	<style>
 		/* header */
+
 		#header {
 			background: url('https://images.macrumors.com/t/aguJT3V2LHkU96Satz-IPm9aUis=/2244x/article-new/2022/01/iPhone-14-Mock-Pill-Blue-Feature.jpg') top/cover no-repeat;
 		}
+
 		.carousel-inner h1 {
 			font-size: 60px;
 			font-family: var(--lg-font);
 		}
+
 		.carousel-item .btn {
 			border-color: #fff !important;
 		}
+
 		.carousel-item .btn:hover {
 			border-color: var(--pink) !important;
 		}
+
+
 		/* title */
+
 		.title h2::before {
 			position: absolute;
 			content: "";
@@ -32,15 +44,20 @@
 			-ms-transform: translateY(-50%);
 			transform: translateY(-50%);
 		}
+
+
 		/* collection */
+
 		.active-filter-btn {
 			background-color: var(--pink) !important;
 			color: #fff !important;
 			border-color: var(--pink) !important;
 		}
+
 		.filter-button-group .btn:hover {
 			color: #fff !important;
 		}
+
 		.collection-img span {
 			top: 20px;
 			right: 20px;
@@ -48,49 +65,129 @@
 			height: 46px;
 			border-radius: 50%;
 		}
+
+
 		/* offers */
+
 		#offers {
 			background: url('https://images.samsung.com/vn/smartphones/galaxy-s21-ultra-5g/images/galaxy-s21-ultra-5g-share-image.jpg') center/cover no-repeat;
 		}
+
 		#offers .row {
 			min-height: 60vh;
 		}
+
 		.offers-content span {
 			font-size: 28px;
 		}
+
 		.offers-content h2 {
 			font-size: 60px;
 			font-family: var(--lg-font);
 		}
+
 		.offers-content .btn {
 			border-color: transparent !important;
 		}
+
+
 		/* about */
+
 		#about {
 			background-color: rgba(179, 179, 179, 0.05);
 		}
+
+
 		/* newsletter */
+
 		#newsletter {
 			background-color: rgba(179, 179, 179, 0.05);
 		}
+
 		#newsletter p {
 			max-width: 600px;
 		}
+
 		#newsletter .input-group {
 			max-width: 500px;
 		}
+
 		#newsletter .form-control {
 			border-top-left-radius: 25px;
 			border-bottom-left-radius: 25px;
 		}
+
 		#newsletter .btn {
 			background-color: var(--pink);
 			color: #fff;
 			border-color: var(--pink);
 		}
+
 		#newsletter .btn:hover {
 			background-color: #000;
 			border-color: #000;
+		}
+
+
+		.productz-item {
+			border: 1px solid rgb(219, 219, 219);
+		}
+
+		.productz-img {
+			position: relative;
+			overflow: hidden;
+		}
+
+		.btnz {
+			position: absolute;
+			left: 0;
+			bottom: -100%;
+			font-size: 15px;
+			font-weight: 300;
+			transition: all 0.3s ease-in-out;
+		}
+
+		.btnz a {
+			border: none;
+			background-color: rgb(39, 39, 39);
+			color: #fff;
+			transition: all 0.3s ease-in-out;
+		}
+
+		.btnz a:hover {
+			color: #fcb941;
+		}
+
+		.productz-img:hover .btnz {
+			bottom: 0;
+		}
+
+		.heart-icon {
+			position: absolute;
+			top: 16px;
+			right: 15px;
+			font-size: 18px;
+		}
+
+		.productz-type {
+			font-size: 13px;
+			opacity: 0.8;
+		}
+
+		.productz-name {
+			transition: all 0.3s ease-in-out;
+		}
+
+		.productz-name:hover {
+			color: #B3CDC0 !important;
+		}
+
+		.productz-price {
+			color: #fcb941;
+		}
+
+		.ratingz {
+			font-size: 13px;
 		}
 	</style>
 	<!-- header -->
@@ -135,23 +232,38 @@
 				<div class="collection-list mt-4 row gx-0 gy-3">
 					{% for product in products %}
 						{% if product.price > 450 %}
-							<div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
-								<div class="collection-img position-relative">
-									<a href="{{path('product_detail', {'id': product.id})}}"><img src="{{asset('images/products/' ~ product.image)}}" class="w-100"></a>
+							<div class="col-md-6 col-lg-4 col-xl-3 p-2 best productz-item">
+								<div class="collection-img position-relative ">
+									<div class="productz-img">
+										<img src="{{asset('images/products/' ~ product.image)}}" alt="" class="img-fluid d-block mx-auto">
+										{# <span class="heart-icon">
+											<i class="far fa-heart"></i>
+										</span> #}
+										<div class="row btnz w-100 mx-auto text-center">
+											<a href="{{path('cart_add',{'id':product.id})}}" type="button" class="col-6 py-2 text-decoration-none">
+												<i class="fa fa-cart-plus"></i>
+												Add to Cart
+											</a>
+											<a href="{{path('product_detail', {'id': product.id})}}" type="button" class="col-6 py-2 text-decoration-none">
+												<i class="fa fa-binoculars"></i>
+												View
+											</a>
+										</div>
+									</div>
 									<span class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
 								</div>
-								<div class="text-center">
-									<div class="rating mt-3">
-									{% set rand = random(2,5) %}
-									{% for i in 1 .. rand %}
-										<span class="text-primary">
-											<i class="fas fa-star"></i>
-										</span>
-									{% endfor %}
+								<div class="text-center productz-info p-3">
+									<a href="#" class="d-block text-dark text-decoration-none py-2 productz-name">{{product.name}}</a>
+									<span class="fw-bold productz-price">$ {{product.price}}</span>
+									<div class="rating d-flex mt-1 ratingz">
+										{% set rand = random(2,5) %}
+										{% for i in 1 .. rand %}
+											<span class="text-primary">
+												<i class="fas fa-star"></i>
+											</span>
+										{% endfor %}
+										<span>(25 reviews)</span>
 									</div>
-									<p class="text-capitalize my-1">{{product.name }}</p>
-									<span class="fw-bold">$
-										{{product.price}}</span>
 								</div>
 							</div>
 						{% endif %}
@@ -337,22 +449,22 @@
 	<!-- end of newsletter -->
 	<script>
 		// init Isotope
-var $grid = $('.collection-list').isotope({ // options
-});
-// filter items on button click
-$('.filter-button-group').on('click', 'button', function () {
-var filterValue = $(this).attr('data-filter');
-resetFilterBtns();
-$(this).addClass('active-filter-btn');
-$grid.isotope({filter: filterValue});
-});
-var filterBtns = $('.filter-button-group').find('button');
-function resetFilterBtns() {
-filterBtns.each(function () {
-$(this).removeClass('active-filter-btn');
-});
-}
+		var $grid = $('.collection-list').isotope({});
+		// filter items on button click
+		$('.filter-button-group').on('click', 'button', function () {
+			var filterValue = $(this).attr('data-filter');
+			resetFilterBtns();
+			$(this).addClass('active-filter-btn');
+			$grid.isotope({filter: filterValue});
+		});
+		var filterBtns = $('.filter-button-group').find('button');
+		function resetFilterBtns() {
+			filterBtns.each(function () {
+				$(this).removeClass('active-filter-btn');
+			});
+		}
 	</script>
 	<!-- jquery -->
 	<script src="js/jquery-3.6.0.js"></script>
+	{% endif %}
 {% endblock %}

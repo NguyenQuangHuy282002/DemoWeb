@@ -112,10 +112,12 @@
                         </div>
                     </div>
                     <table class="table table-striped table-hover table-bordered">
-                        <thead>
+                        <thead style="text-align: center; vertical-align: middle;">
                             <tr>
                                 <th>ID</th>
-                                <th>Product name <i class="fa fa-sort"></i></th>
+                                <th width="200"><a href="{{path('sort_asc_product')}}"><i class="fa fa-angle-up"></i></a>
+                                 Product name 
+                                <a href="{{path('sort_desc_product')}}"><i class="fa fa-angle-down"></i></a></th>
                                 <th>Product image</th>
                                 <th>Category</th>
                                 <th>Brand</th>
@@ -130,7 +132,7 @@
                             {% for p in products %}
                             <tr>
                                 <td>{{p.id}}</td>
-                                <td>{{p.name}}</td>
+                                <td style="text-align:center;">{{p.name}}</td>
                                 <td><img src="{{asset('images/products/' ~ p.image)}}" width="100" height="100"></td>
                                 <td>{{p.category.name|default('Not updated yet')}}</td>
                                 <td>{{p.brand.name|default('Not updated yet')}}</td>
@@ -138,7 +140,7 @@
                                 <td>{{p.date| date('y/m/d')}}</td>
                                 <td>{{p.description}}</td>
                                 <td>${{p.price}}</td>
-                                <td>
+                                <td style="text-align:center;">
                                     <a href="{{path('product_edit', {'id':p.id})}}" class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
                                     <a href="{{path('product_delete', {'id':p.id})}}" class="delete" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
                                 </td>
@@ -156,7 +158,7 @@
     /* special section in user page */
 
     #special  {
-        margin-top: 5%;
+        margin-top: 3%;
     }
     .special-img span {
         top: 20px;
@@ -188,7 +190,7 @@
         float: right;
     }
 
-    .title h2{
+    .title h1{
        margin-left: 15%
     }
 
@@ -196,9 +198,17 @@
     </style>
     <!-- special products -->
 	<section id="special" class="py-5">
+    <div class="container col-md-4 mt-5">
+    {% for flash in app.flashes('Success') %}
+        <p class="alert alert-primary">{{flash}}</p>
+    {% endfor %}
+    {% for flash in app.flashes('Error') %}
+        <p class="alert alert-danger">{{flash}}</p>
+    {% endfor %}
+    </div>
 		<div class="container">
 			<div class="title text-center py-5">
-				<h2 class="position-relative d-inline-block">Product list</h2>
+				<h1 class="position-relative d-inline-block">Product list</h1>
 			
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

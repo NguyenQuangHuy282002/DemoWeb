@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Order List
+{% block title %}Order Storage
 {% endblock %}
-
+{% block navbar %}{% endblock %}
 {% block body %}
 
 	<style>
@@ -97,7 +97,7 @@
 
 	</style>
 
-	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER') %}
+	{% if is_granted('ROLE_USER') %}
 
 		<body>
 			<div class="container col-md-4 mt-5">
@@ -111,20 +111,7 @@
 
 
 			<div class="container mt-5" style="padding: 150px 0">
-				<h1 class="text text-primary text-center">Order list</h1>
-				<div class="dropdown">
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-						Sort By Date Time
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li>
-							<a class="dropdown-item" href="{{path('sort_asc_date')}}">Newest</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="{{path('sort_desc_date')}}">Oldest</a>
-						</li>
-					</ul>
-				</div>
+				<h1 class="text text-primary text-center">Detail Information of Order {{order.id}}</h1>
 				<table class="table table-borderless main">
 					<thead>
 						<tr class="head">
@@ -133,16 +120,14 @@
 									<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
 								</div>
 							</th>
-							<th scope="col">Order ID</th>
-							<th scope="col">Status</th>
-							<th scope="col">Customer</th>
+							<th scope="col">Product Name</th>
+							<th scope="col">Current Price</th>
+							<th scope="col">Quantity</th>
 							<th scope="col">Menu</th>
-							<th scope="col">Order Date</th>
-							<th scope="col">Delivery</th>
 						</tr>
 					</thead>
 					<tbody>
-						{% for order in orders %}
+						{% for order in detail %}
 							<tr class="rounded bg-white">
 								<th scope="row">
 									<div class="form-check">
@@ -150,29 +135,17 @@
 									</div>
 								</th>
 								<td class="order-color">
-									<a href="{{path('Order_detail', {'id':order.id})}}">{{order.id}}</a>
-								</td>
-								<td>Valid
-									<i class="fas fa-coffin    "></i>
+										<a href="{{path('product_detail', {'id':order.id})}}">{{order.productName}}</a>								
 								</td>
 								<td class="d-flex align-items-center">
-									<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/640px-User_icon_2.svg.png" class="rounded-circle" width="25">
-									<span class="ml-2">{{order.username}}</span>
+									$
+									<span class="ml-2">{{order.price}}</span>
 								</td>
-
-
+								<td>{{order.quantity}}</td>
 								<td>
 									<a href="{{path('Order_delete', {'id':order.id})}}" class="btn btn-primary btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-										Refuse Order
+										Do nothing
 									</a>
-								</td>
-								<td>{{order.date | date('d/m/Y')}}</td>
-								<td>
-									{# {% for delivery in order.delivery %} #}
-
-										<a href="{{path('delivery_detail',{'id': order.delivery.id})}}">{{order.delivery.name}}</a>
-
-									{# {% endfor %} #}
 								</td>
 							</tr>
 						{% endfor %}

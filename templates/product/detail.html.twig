@@ -121,15 +121,19 @@
 <section id="product_detail">
     <div class="wrapper">
         <div class="product-img">
-            <a href="{{path('product_detail', {'id': product.id})}}"><img src="{{asset('images/products/'~product.image)}}" width="400" height = "400"></a>
+            <img src="{{asset('images/products/'~product.image)}}" width="400" height = "400">
         </div>
         <div class="product-info">
             <div class="product-text">
                 <h1>{{product.name}}</h1>
                 <br>
                 <h2 class=" text text-dark"><b>Category: 
-                    <a style="text-decoration:none" href="{{path('product_detail_catId', {'catId': product.category.id})}}">{{product.category.name|default('Not updated yet')}}</a>
+                    <a style="text-decoration:none" href="{{path('product_detail_catId', {'catId': product.category.id |default('Not updated yet')})}}">{{product.category.name|default('Not updated yet')}}</a>
                 </b></h2>
+                <h2 class=" text text-dark"><b>Brand: 
+                    <a style="text-decoration:none" href="{{path('product_detail_brandId', {'brandId': product.brand.id |default('Not updated yet')})}}">{{product.brand.name|default('Not updated yet')}}</a>
+                </b></h2>
+                
                 <h2>Quantity: {{product.quantity}}</h2>
                 <h2>Date: {{product.date | date('y/m/d')}}</h2>
                 <p>{{product.description}}</p>

@@ -26,6 +26,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $Gender;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $phonenumber;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $gmail;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,5 +117,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->Gender;
+    }
+
+    public function setGender(string $Gender): self
+    {
+        $this->Gender = $Gender;
+
+        return $this;
+    }
+
+    public function getPhonenumber(): ?string
+    {
+        return $this->phonenumber;
+    }
+
+    public function setPhonenumber(string $phonenumber): self
+    {
+        $this->phonenumber = $phonenumber;
+
+        return $this;
+    }
+
+    public function getGmail(): ?string
+    {
+        return $this->gmail;
+    }
+
+    public function setGmail(string $gmail): self
+    {
+        $this->gmail = $gmail;
+
+        return $this;
     }
 }

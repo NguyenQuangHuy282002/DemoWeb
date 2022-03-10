@@ -113,10 +113,12 @@
                     </div>
                 </div>
                 <table class="table table-striped table-hover table-bordered">
-                    <thead>
+                    <thead style="text-align: center; vertical-align: middle;">
                         <tr>
                             <th>ID</th>
-                            <th>Unit name <i class="fa fa-sort"></i></th>
+                            <th width="200"><a href="{{path('sort_asc_product')}}"><i class="fa fa-angle-up"></i></a>
+                                 Unit name 
+                                <a href="{{path('sort_desc_product')}}"><i class="fa fa-angle-down"></i></a></th>
                             <th>Unit Logo</th>
                             <th>Description</th>
 							<th>Orders History</th>
@@ -126,8 +128,8 @@
                     <tbody>
                         {% for d in deliverys %}
                         <tr>
-                            <td>{{d.id}}</td>
-                            <td>{{d.name}}</td>
+                            <td style="text-align:center;">{{d.id}}</td>
+                            <td style="text-align:center;">{{d.name}}</td>
                             <td><img src="{{asset('images/delivery/' ~ d.image)}}" width="100" height="100"></td>
                             <td>{{d.description}}</td>
                             <td>
@@ -135,7 +137,7 @@
                                 <p>- {{o.id}}</p>
                             {% endfor %}
                             </td>
-                            <td>
+                            <td style="text-align:center;">
                                 <a href="{{path('delivery_edit', {'id':d.id})}}" class="edit" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
                                 <a href="{{path('delivery_delete', {'id':d.id})}}" class="delete" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
                             </td>

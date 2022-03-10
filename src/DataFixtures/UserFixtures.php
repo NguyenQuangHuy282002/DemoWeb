@@ -18,18 +18,27 @@ class UserFixtures extends Fixture
         $user = new User;
         $user->setUsername("admin");
         $user->setRoles(['ROLE_ADMIN']);
+        $user->setGender("Male");
+        $user->setPhonenumber("1423143212");
+        $user->setGmail("huy3124@gmail.com");
         $user->setPassword($this->hasher->hashPassword($user,"123456"));
         $manager->persist($user);
 
         $user = new User;
         $user->setUsername("user");
         $user->setRoles(['ROLE_USER']);
+        $user->setGender("Male");
+        $user->setPhonenumber("1423143212");
+        $user->setGmail("huy3124@gmail.com");
         $user->setPassword($this->hasher->hashPassword($user,"123456"));
         $manager->persist($user);
 
         $user = new User;
         $user->setUsername("staff");
         $user->setRoles(['ROLE_STAFF']);
+        $user->setGender("Male");
+        $user->setPhonenumber("1423143212");
+        $user->setGmail("huy3124@gmail.com");
         $user->setPassword($this->hasher->hashPassword($user,"123456"));
         $manager->persist($user);
 
