@@ -72,7 +72,7 @@ class DeliveryRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return Delivery Returns Delivery objects
+    * @return Delivery[] Returns Delivery objects
     */
     
     public function getNameDelivery($value)

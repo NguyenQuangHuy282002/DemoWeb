@@ -44,23 +44,25 @@ class OrderController extends AbstractController
      * @IsGranted("ROLE_MANAGER")
      */
     #[Route('/detail/{id}', name: 'Order_detail')]
-    public function Order_detail($id, DetailRepository $DR)
+    public function Order_detail($id, DetailRepository $DR, ProductRepository $PR)
     {
 
         $order = $this->getDoctrine()->getRepository(Detail::class)->find($id);
         $orderDetails = $DR->findDetailByOID($order);
+
         if ($order == null) {
             $this->addFlash('error', 'Order not found');
             return $this->redirectToRoute('Order');
         }
         return $this->render('order/detail.html.twig', [
             'order' => $order,
-            'detail' => $orderDetails
+            'detail' => $orderDetails,
+
         ]);
     }
 
     /**
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_USER")
      */
     #[Route('/add', name: 'order_add')]
     public function AddProduct(UserInterface $user, ProductRepository $PR, SessionInterface $si, DeliveryRepository $DR)
@@ -145,6 +147,8 @@ class OrderController extends AbstractController
         $this->addFlash('success', 'Order deleted successfully');
         return $this->redirectToRoute('Order', []);
     }
+
+    
 
 
     #[Route("/asc", name: "sort_asc_date")]

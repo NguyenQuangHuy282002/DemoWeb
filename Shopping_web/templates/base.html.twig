@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,6 +11,7 @@
 
 			<link
 			rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 			<!--  ======== CSS ======== -->
 			<link rel="stylesheet" href="../assets/styles/layout.css">
 			<link
@@ -31,14 +31,12 @@
 			<!-- Latest compiled JavaScript -->
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-			
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js" integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			{# owl-carousel #}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" integrity="sha512-RWhcC19d8A3vE7kpXq6Ze4GcPfGe3DQWuenhXAbcGiZOaqGojLtWwit1eeM9jLGHFv8hnwpX3blJKGjTsf2HxQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" integrity="sha512-f28cvdA4Bq3dC9X9wNmSx21rjWI+5piIW/uoc2LuQ67asKxfQjUow2MkcCNcfJiaLrHcGbed1wzYe3dlY4w9gA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js" integrity="sha512-9CWGXFSJ+/X0LWzSRCZFsOPhSfm6jbnL+Mpqo0o8Ke2SYr8rCTqb4/wGm+9n13HtDE1NQpAEOrMecDZw4FXQGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.js" integrity="sha512-IUpSKpPKlXuPokiYONEZUG/H4c1rw4VmbGdnBKB18qm/9jbnxQ4Rv5Da9qEmB3hIa3k4DxRNoZfB6FTpERnuOQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		{% endblock %}
 
 		{% block javascripts %}
@@ -65,7 +63,7 @@
 
 			.btn:not(.nav-btns button) {
 				background-color: #fff;
-				
+
 				color: rgb(85, 85, 85);
 				padding: 10px 28px;
 				border-radius: 25px;
@@ -77,10 +75,10 @@
 				color: #fff;
 				border-color: var(--pink);
 			}
-			
-			.btn a{
+
+			.btn a {
 				color: rgb(85, 85, 85);
-				text-decoration:none;
+				text-decoration: none;
 			}
 
 
@@ -114,9 +112,8 @@
 			.nav-item {
 				border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
 			}
-			
 		</style>
-			
+
 	</head>
 	<body>
 		{% block navbar %}
@@ -131,12 +128,12 @@
 					</a>
 
 					<div class="order-lg-2 nav-btns">
-						
-					
+
+
 						<button type="button" class="btn position-relative">
 							<form action="{{ path('product_search') }}" method="post">
-							<input type="search" name="word" id="search" placeholder="Search..." />
-							<i class="fa fa-search"></i>
+								<input type="search" name="word" id="search" placeholder="Search..."/>
+								<i class="fa fa-search"></i>
 							</form>
 						</button>
 
@@ -144,17 +141,17 @@
 							<i class="fa fa-shopping-cart"></i>
 							<span class="position-absolute top-0 start-100 translate-middle badge bg-primary">5</span>
 						</a>
-					 	{% if app.user %}
-						<button type="button" class="btn position-relative">
-							<a href="{{path('app_logout')}}">Logout</a>
-						</button>
+						{% if app.user %}
+							<button type="button" class="btn position-relative">
+								<a href="{{path('app_logout')}}">Logout</a>
+							</button>
 
 						{% else %}
-						<button type="button" class="btn position-relative">
-							<a href="{{path('app_login')}}">Login</a>
-						</button>
+							<button type="button" class="btn position-relative">
+								<a href="{{path('app_login')}}">Login</a>
+							</button>
 						{% endif %}
-						
+
 					</div>
 
 					<button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -170,42 +167,50 @@
 								<a class="nav-link text-uppercase text-dark" href="{{path('product_index')}}">Shop</a>
 							</li>
 							{# page for admin #}
-							{% if is_granted('ROLE_ADMIN') %}
-							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="{{path('category_index')}}">Category</a>
-							</li>
-							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="{{path('brand_index')}}">Brand</a>
-							</li>
-							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="{{path('delivery_index')}}">Delivery</a>
-							</li>
-							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="{{path('supplier_index')}}">Supplier</a>
-							</li>		
+							{% if is_granted('ROLE_ADMIN')%}
+								<li class="nav-item px-2 py-2">
+									<a class="nav-link text-uppercase text-dark" href="{{path('category_index')}}">Category</a>
+								</li>
+								<li class="nav-item px-2 py-2">
+									<a class="nav-link text-uppercase text-dark" href="{{path('brand_index')}}">Brand</a>
+								</li>
+								<li class="nav-item px-2 py-2">
+									<a class="nav-link text-uppercase text-dark" href="{{path('delivery_index')}}">Delivery</a>
+								</li>
+								<li class="nav-item px-2 py-2">
+									<a class="nav-link text-uppercase text-dark" href="{{path('supplier_index')}}">Supplier</a>
+								</li>
+							{% elseif is_granted('ROLE_MANAGER') %}
+								<li class="nav-item px-2 py-2">
+									<a class="nav-link text-uppercase text-dark" href="{{path('Order')}}">Order</a>
+								</li>
 							{% else %}
-							<li class="nav-item dropdown px-2 py-2">
-								<a class="nav-link dropdown-toggle text-uppercase text-dark" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Category
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-								{% for category in categories %}
-								
-									<li><a class="dropdown-item" href="{{path('product_detail_catId', {'catId': category.id})}}">{{category.name}}</a></li>
-								{% endfor %}
-								</ul>
-							</li>
+								<li class="nav-item dropdown px-2 py-2">
+									<a class="nav-link dropdown-toggle text-uppercase text-dark" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Category
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+										{% for category in categories %}
 
-							<li class="nav-item dropdown px-2 py-2">
-								<a class="nav-link dropdown-toggle text-uppercase text-dark" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Brand
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-								{% for brand in brands %}
-									<li><a class="dropdown-item" href="#">{{brand.name}}</a></li>
-								{% endfor %}
-								</ul>
-							</li>
+											<li>
+												<a class="dropdown-item" href="{{path('product_detail_catId', {'catId': category.id})}}">{{category.name}}</a>
+											</li>
+										{% endfor %}
+									</ul>
+								</li>
+
+								<li class="nav-item dropdown px-2 py-2">
+									<a class="nav-link dropdown-toggle text-uppercase text-dark" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Brand
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+										{% for brand in brands %}
+											<li>
+												<a class="dropdown-item" href="#">{{brand.name}}</a>
+											</li>
+										{% endfor %}
+									</ul>
+								</li>
 							{% endif %}
 							<li class="nav-item px-2 py-2">
 								<a class="nav-link text-uppercase text-dark" href="#blogs">User</a>
@@ -323,6 +328,6 @@
 		<script src="assets/js/script.js"></script>
 		<!-- jquery -->
 		<script src="js/jquery-3.6.0.js"></script>
-		
+
 	</body>
 </html>

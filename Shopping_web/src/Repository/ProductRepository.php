@@ -110,4 +110,19 @@ class ProductRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+    /**
+     * @return Product[] Returns an array of Author objects
+     */
+    public function searchByName($keyword)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.name = :key')
+            ->setParameter('key', $keyword)
+            ->orderBy('a.name', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
 }

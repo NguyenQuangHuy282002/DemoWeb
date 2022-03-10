@@ -124,14 +124,6 @@
 		}
 
 
-		{
-			# _________________CSS for carousel product_____________________ #
-		}
-		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500 &display=swap');
-		body {
-			font-family: 'Poppins', sans-serif;
-		}
-
 		.productz-item {
 			border: 1px solid rgb(219, 219, 219);
 		}
@@ -182,7 +174,7 @@
 		}
 
 		.productz-name:hover {
-			color: #fcb941 !important;
+			color: #B3CDC0 !important;
 		}
 
 		.productz-price {
@@ -192,10 +184,10 @@
 		.ratingz {
 			font-size: 13px;
 		}
-
-		.productz-item {
-			width: 300px;
-		}
+		
+			{# # .productz-item {
+				width: 300px;
+			} # #}
 
 	</style>
 	<!-- header -->
@@ -240,23 +232,38 @@
 				<div class="collection-list mt-4 row gx-0 gy-3">
 					{% for product in products %}
 						{% if product.price > 450 %}
-							<div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
-								<div class="collection-img position-relative">
-									<a href="{{path('product_detail', {'id': product.id})}}"><img src="{{asset('images/products/' ~ product.image)}}" class="w-100"></a>
+							<div class="col-md-6 col-lg-4 col-xl-3 p-2 best productz-item">
+								<div class="collection-img position-relative ">
+									<div class="productz-img">
+										<img src="{{asset('images/products/' ~ product.image)}}" alt="" class="img-fluid d-block mx-auto">
+										{# <span class="heart-icon">
+											<i class="far fa-heart"></i>
+										</span> #}
+										<div class="row btnz w-100 mx-auto text-center">
+											<a href="{{path('cart_add',{'id':product.id})}}" type="button" class="col-6 py-2 text-decoration-none">
+												<i class="fa fa-cart-plus"></i>
+												Add to Cart
+											</a>
+											<a href="{{path('product_detail', {'id': product.id})}}" type="button" class="col-6 py-2 text-decoration-none">
+												<i class="fa fa-binoculars"></i>
+												View
+											</a>
+										</div>
+									</div>
 									<span class="position-absolute bg-primary text-white d-flex align-items-center justify-content-center">sale</span>
 								</div>
-								<div class="text-center">
-									<div class="rating mt-3">
+								<div class="text-center productz-info p-3">
+									<a href="#" class="d-block text-dark text-decoration-none py-2 productz-name">{{product.name}}</a>
+									<span class="fw-bold productz-price">$ {{product.price}}</span>
+									<div class="rating d-flex mt-1 ratingz">
 										{% set rand = random(2,5) %}
 										{% for i in 1 .. rand %}
 											<span class="text-primary">
 												<i class="fas fa-star"></i>
 											</span>
 										{% endfor %}
+										<span>(25 reviews)</span>
 									</div>
-									<p class="text-capitalize my-1">{{product.name }}</p>
-									<span class="fw-bold">$
-										{{product.price}}</span>
 								</div>
 							</div>
 						{% endif %}
@@ -284,54 +291,9 @@
 		<h1 class="text-center">Featured Products</h1>
 		<p class="fw-light w-75 mx-auto text-center">List of Favorite Products</p>
 	</div>
-	{% for product in products %}
-		<div class="row g-4 my-5 mx-auto owl-carousel owl-theme">
-			<div class="col productz-item mx-auto">
-				<div class="productz-img">
-					<img src="{{asset('images/products/' ~ product.image)}}" alt="" class="img-fluid d-block mx-auto">
-					<span class="heart-icon">
-						<i class="far fa-heart"></i>
-					</span>
-					<div class="row btnz w-100 mx-auto text-center">
-						<a href="{{path('cart_add',{'id':product.id})}}" type="button" class="col-6 py-2">
-							<i class="fa fa-cart-plus"></i>
-							Add to Cart
-						</a>
-						<a href="{{path('product_detail', {'id': product.id})}}" type="button" class="col-6 py-2">
-							<i class="fa fa-binoculars"></i>
-							View
-						</a>
-					</div>
-				</div>
 
-				<div
-					class="productz-info p-3">
-					{# <span class="productz-type">Electronics & Accessories</span> #}
-					<a href="#" class="d-block text-dark text-decoration-none py-2 productz-name">{{product.name}}</a>
-					<span class="productz-price">$
-						{{product.price}}</span>
-					<div class="ratingz d-flex mt-1">
-						<span>
-							<i class="fa fa-star"></i>
-						</span>
-						<span>
-							<i class="fa fa-star"></i>
-						</span>
-						<span>
-							<i class="fa fa-star"></i>
-						</span>
-						<span>
-							<i class="fa fa-star"></i>
-						</span>
-						<span>
-							<i class="fa fa-star"></i>
-						</span>
-						<span>(25 reviews)</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	{% endfor %}<!-- blogs --><section id="blogs" class="py-5">
+	<!-- blogs -->
+	<section id="blogs" class="py-5">
 		<div class="container">
 			<div class="title text-center py-5">
 				<h2 class="position-relative d-inline-block">Our Latest Blog</h2>
@@ -475,7 +437,9 @@
 				</div>
 			</div>
 		</div>
-	</section><!-- end of newsletter --><script>
+	</section>
+	<!-- end of newsletter -->
+	<script>
 		$('.owl-carousel').owlCarousel({
 loop: true,
 margin: 0,
@@ -496,9 +460,8 @@ loop: false
 }
 }
 });
-	</script>
-	<script>
-		// init Isotope
+
+// init Isotope
 var $grid = $('.collection-list').isotope({ // options
 });
 // filter items on button click
@@ -515,5 +478,5 @@ filterBtns.each(function () {
 $(this).removeClass('active-filter-btn');
 });
 }
-	</script><!-- jquery --><script src="js/jquery-3.6.0.js"></script>
+	</script>
 {% endblock %}

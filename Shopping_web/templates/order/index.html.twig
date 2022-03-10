@@ -97,7 +97,7 @@
 
 	</style>
 
-	{% if is_granted('ROLE_ADMIN') %}
+	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER') %}
 
 		<body>
 			<div class="container col-md-4 mt-5">
@@ -168,11 +168,11 @@
 								</td>
 								<td>{{order.date | date('d/m/Y')}}</td>
 								<td>
-									{% for delivery in order.delivery %}
+									{# {% for delivery in order.delivery %} #}
 
-										<a href="{{path('delivery_detail',{'id':delivery.id})}}">{{delivery.name}}</a>
+										<a href="{{path('delivery_detail',{'id': order.delivery.id})}}">{{order.delivery.name}}</a>
 
-									{% endfor %}
+									{# {% endfor %} #}
 								</td>
 							</tr>
 						{% endfor %}
