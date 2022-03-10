@@ -163,14 +163,15 @@
 
 					<div class="collapse navbar-collapse order-lg-1" id="navMenu">
 						<ul class="navbar-nav mx-auto text-center">
+							
+							{# page for admin #}
+							{% if is_granted('ROLE_ADMIN') %}
 							<li class="nav-item px-2 py-2">
 								<a class="nav-link text-uppercase text-dark" href="{{path('homepage')}}">Home</a>
 							</li>
 							<li class="nav-item px-2 py-2">
 								<a class="nav-link text-uppercase text-dark" href="{{path('product_index')}}">Shop</a>
 							</li>
-							{# page for admin #}
-							{% if is_granted('ROLE_ADMIN') %}
 							<li class="nav-item px-2 py-2">
 								<a class="nav-link text-uppercase text-dark" href="{{path('category_index')}}">Category</a>
 							</li>
@@ -183,11 +184,15 @@
 							<li class="nav-item px-2 py-2">
 								<a class="nav-link text-uppercase text-dark" href="{{path('supplier_index')}}">Supplier</a>
 							</li>	
-							<li class="nav-item px-2 py-2">
-								<a class="nav-link text-uppercase text-dark" href="{{path('app_user')}}">User</a>
-							</li>	
+			
 							{% elseif is_granted('ROLE_USER') %}
 							{# page for user #}
+							<li class="nav-item px-2 py-2">
+								<a class="nav-link text-uppercase text-dark" href="{{path('homepage')}}">Home</a>
+							</li>
+							<li class="nav-item px-2 py-2">
+								<a class="nav-link text-uppercase text-dark" href="{{path('product_index')}}">Shop</a>
+							</li>
 							<li class="nav-item dropdown px-2 py-2">
 								<a class="nav-link dropdown-toggle text-uppercase text-dark" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Category
@@ -214,6 +219,12 @@
 							</li>
 							{% else %}
 							{#page for non-logged in user#}
+							<li class="nav-item px-2 py-2">
+								<a class="nav-link text-uppercase text-dark" href="{{path('homepage')}}">Home</a>
+							</li>
+							<li class="nav-item px-2 py-2">
+								<a class="nav-link text-uppercase text-dark" href="{{path('product_index')}}">Shop</a>
+							</li>
 							<li class="nav-item dropdown px-2 py-2">
 								<a class="nav-link dropdown-toggle text-uppercase text-dark" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Category

@@ -8,7 +8,7 @@ parameters:
     brand_image: '%kernel.project_dir%/public/images/brands'
     delivery_image: '%kernel.project_dir%/public/images/delivery'
     supplier_image: '%kernel.project_dir%/public/images/supplier'
-
+    category_image: '%kernel.project_dir%/public/images/category'
 services:
     # default configuration for services in *this* file
     _defaults:

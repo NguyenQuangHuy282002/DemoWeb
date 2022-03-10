@@ -16,9 +16,14 @@ class CategoryController extends AbstractController
     #[Route('', name: 'category_index')]
     public function ViewAllcategory()
     {
+        $count = 0;
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        foreach($categories as $c){
+            $count++;
+        }
         return $this->render('category/index.html.twig',[
-            'categories'=> $categories
+            'categories'=> $categories,
+            'count' => $count
         ]);
     }
     //View category by id
@@ -73,6 +78,21 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $category->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('category_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $category->setImage($imageName);
+            }
             
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($category);
@@ -96,7 +116,21 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class,$category);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $file = $form['image']->getData();
+            if($file != null){
+                $image = $category->getImage();
+                $imgName = uniqid();
+                $imgExtension = $image->guessExtension();
+                $imageName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('category_image'),$imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                $category->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($category);
             $manager->flush();

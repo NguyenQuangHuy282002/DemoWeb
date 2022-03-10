@@ -15,6 +15,8 @@ class CategoryFixtures extends Fixture
             $category = new Category;
             $category->setName("category $i");
             $category->setDescription("Laptop");
+            $category->setImage("622480d2997fc.png");
+
 
             $manager->persist($category);
         }

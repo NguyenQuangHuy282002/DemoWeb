@@ -25,7 +25,7 @@ class OrderController extends AbstractController
 {
 
     /**
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_ADMIN")
      */
     #[Route('/', name: 'Order')]
     public function index(): Response
@@ -41,7 +41,7 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_ADMIN")
      */
     #[Route('/detail/{id}', name: 'Order_detail')]
     public function Order_detail($id, DetailRepository $DR, ProductRepository $PR)
@@ -118,7 +118,7 @@ class OrderController extends AbstractController
 
 
     /**
-     * @IsGranted("ROLE_MANAGER")
+     * @IsGranted("ROLE_ADMIN")
      */
     #[Route('/delete/{id}', name: 'Order_delete')]
     public function Order_delete($id, DetailRepository $DR)

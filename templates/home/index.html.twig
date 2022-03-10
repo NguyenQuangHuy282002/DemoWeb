@@ -6,8 +6,98 @@
 {% block body %}
 	{# page for admin #}
 	{% if is_granted('ROLE_ADMIN') %}
-	<div class="container">
-	<img src="data:image/png;base64,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" alt=""></div>
+	<style>
+.profile{
+    margin-top:15%;
+}
+.profile .container {
+  width: 400px;
+  margin: 120px auto 120px;
+  background-color: #eeeeee;
+  padding: 0 20px 20px;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.075);
+  -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.075);
+  -moz-box-shadow: 0 2px 5px rgba(0,0,0,0.075);
+  text-align: center;
+}
+.profile .container:hover .avatar-flip {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+.profile .container:hover .avatar-flip img:first-child {
+  opacity: 0;
+}
+.profile .container:hover .avatar-flip img:last-child {
+  opacity: 1;
+}
+.avatar-flip {
+  border-radius: 100px;
+  overflow: hidden;
+  height: 150px;
+  width: 150px;
+  position: relative;
+  margin: auto;
+  top: -60px;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 0 13px #f0f0f0;
+  -webkit-box-shadow: 0 0 0 13px #f0f0f0;
+  -moz-box-shadow: 0 0 0 13px #f0f0f0;
+}
+.avatar-flip img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 100px;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+}
+.avatar-flip img:first-child {
+  z-index: 1;
+}
+.avatar-flip img:last-child {
+  z-index: 0;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  opacity: 0;
+}
+.profile h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+  text-transform: uppercase;
+}
+.profile h4 {
+  font-size: 13px;
+  color: #00baff;
+  letter-spacing: 1px;
+  margin-bottom: 25px
+}
+.profile p {
+  font-size: 16px;
+  line-height: 26px;
+  margin-bottom: 20px;
+  color: #666;
+}
+</style>
+<div class="profile">
+    <div class="container">
+    <div class="avatar-flip">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwD89zs3pxlYJI4G48DyAW-zBZ-ZCOO52zofwvQnHrZrJ8sCnTx5_UD9P69IvQAayW0C8&usqp=CAU" height="150" width="150">
+        <img src="http://i1112.photobucket.com/albums/k497/animalsbeingdicks/abd-3-12-2015.gif~original" height="150" width="150">
+    </div>
+    <h2>{{app.user.username}}</h2>
+    <h4>{{app.user.gmail}}</h4>
+    <p>Gender: {{app.user.Gender}}</p>
+    <p>Contact: {{app.user.phonenumber}}</p>
+    </div>
+</div>
 	{% else %}
 	<style>
 		/* header */
