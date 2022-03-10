@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/brand')]
 class BrandController extends AbstractController
@@ -43,6 +44,7 @@ class BrandController extends AbstractController
             ]
         );
     }
+
     /**
      * @IsGranted("ROLE_ADMIN")
      */
@@ -64,6 +66,8 @@ class BrandController extends AbstractController
         }
         return $this -> redirectToRoute('brand_index');
     }
+
+
     /**
      * @IsGranted("ROLE_ADMIN")
      */
@@ -99,6 +103,8 @@ class BrandController extends AbstractController
             'brandForm' => $form
         ]);
     }
+
+
     /**
      * @IsGranted("ROLE_ADMIN")
      */

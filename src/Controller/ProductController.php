@@ -53,7 +53,7 @@ class ProductController extends AbstractController
     //View product by category
 
     #[Route('/catID/{catId}', name: 'product_detail_catId')]
-    public function ViewProductByCatId($catId, ProductRepository $repository)
+    public function findProductByCatId($catId, ProductRepository $repository)
     {
         $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
         $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
@@ -77,7 +77,7 @@ class ProductController extends AbstractController
     //View product by brand
 
     #[Route('/brandID/{brandId}', name: 'product_detail_brandId')]
-    public function ViewProductByBrandId($brandId, ProductRepository $repository)
+    public function findProductByBrandId($brandId, ProductRepository $repository)
     {
         $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
         $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();

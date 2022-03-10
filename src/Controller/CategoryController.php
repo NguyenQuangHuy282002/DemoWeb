@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
@@ -37,6 +38,9 @@ class CategoryController extends AbstractController
         ]);
     }
     // Delete category
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/delete/{id}', name: 'category_delete')]
     public function Deletecategory($id)
     {
@@ -58,6 +62,9 @@ class CategoryController extends AbstractController
         return $this->redirectToRoute('category_index');
     }
     //Add new category
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/add', name: 'category_add')]
     public function Addcategory(Request $request)
     {
@@ -79,6 +86,9 @@ class CategoryController extends AbstractController
         ]);
     }
     //Edit category
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/edit/{id}', name: 'category_edit')]
     public function Editcategory(Request $request, $id)
     {

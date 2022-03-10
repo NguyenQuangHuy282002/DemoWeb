@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/delivery')]
 class DeliveryController extends AbstractController
@@ -42,7 +43,9 @@ class DeliveryController extends AbstractController
             ]
         );
     }
-
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/delete/{id}', name: 'delivery_delete')]
     public function DeleteDelivery($id)
     {
@@ -61,7 +64,9 @@ class DeliveryController extends AbstractController
         }
         return $this -> redirectToRoute('delivery_index');
     }
-
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/add', name: 'delivery_add')]
     public function AddDelivery(Request $request)
     {
@@ -94,7 +99,9 @@ class DeliveryController extends AbstractController
             'deliveryForm' => $form
         ]);
     }
-
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/edit/{id}', name: 'delivery_edit')]
     public function EditDelivery(Request $request, $id)
     {

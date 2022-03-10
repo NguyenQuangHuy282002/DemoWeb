@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Brand;
+use App\Entity\Category;
 use App\Entity\Supplier;
 use App\Form\SupplierType;
 use App\Repository\SupplierRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/supplier')]
 class SupplierController extends AbstractController
@@ -30,6 +33,8 @@ class SupplierController extends AbstractController
     #[Route('/detail/{id}', name: 'supplier_detail')]
     public function ViewSupplierById($id)
     {
+        $categories = $this -> getDoctrine()->getRepository(Category::class) ->findAll();
+        $brands = $this -> getDoctrine()->getRepository(Brand::class) ->findAll();
         $supplier = $this->getDoctrine()->getRepository(Supplier::class)->find($id);
         if ($supplier == null) {
             $this->addFlash("Error", "Supplier not found !");
@@ -39,11 +44,16 @@ class SupplierController extends AbstractController
         return $this->render(
             "supplier/detail.html.twig",
             [
-                'supplier' => $supplier
+                'supplier' => $supplier,
+                'brands' => $brands,
+                'categories' => $categories
             ]
         );
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/delete/{id}', name: 'supplier_delete')]
     public function DeleteSupplier($id)
     {
@@ -63,6 +73,9 @@ class SupplierController extends AbstractController
         return $this -> redirectToRoute('supplier_index');
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/add', name: 'supplier_add')]
     public function AddSupplier(Request $request)
     {
@@ -96,6 +109,9 @@ class SupplierController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/edit/{id}', name: 'supplier_edit')]
     public function EditSupplier(Request $request, $id)
     {

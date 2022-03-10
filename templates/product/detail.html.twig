@@ -133,6 +133,9 @@
                 <h2 class=" text text-dark"><b>Brand: 
                     <a style="text-decoration:none" href="{{path('product_detail_brandId', {'brandId': product.brand.id |default('Not updated yet')})}}">{{product.brand.name|default('Not updated yet')}}</a>
                 </b></h2>
+                <h2 class=" text text-dark"><b>Supplier: 
+                    <a style="text-decoration:none" href="{{path('supplier_detail', {'id':product.brand.supplier.id|default('Not updated yet')})}}">{{product.brand.supplier|default('Not updated yet')}}</a>
+                </b></h2>
                 
                 <h2>Quantity: {{product.quantity}}</h2>
                 <h2>Date: {{product.date | date('y/m/d')}}</h2>
