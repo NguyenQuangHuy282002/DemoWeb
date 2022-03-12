@@ -28,17 +28,45 @@ class OrderController extends AbstractController
      * @IsGranted("ROLE_MANAGER")
      */
     #[Route('/', name: 'Order')]
-    public function index(): Response
+    public function index(OrderRepository $OR): Response
     {
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
         $brands = $this->getDoctrine()->getRepository(Brand::class)->findAll();
         $orders = $this->getDoctrine()->getRepository(Order::class)->findAll();
+        $total = "";
+        $totalU = "";
+        $date = [];
+        $get1 = $OR ->getDate();
+        $i = 0;
+        $j = 0;
+
+        foreach ($get1 as $g){
+            $date[$i] = $g['date'];
+            $i++;
+        }
+
+        $name = [];
+        $get2 = $OR ->getName();
+
+        foreach ($get2 as $g){
+            $name[$j] = $g['username'];
+            $j++;
+        }
+        
+
         return $this->render('order/index.html.twig', [
             'orders' => $orders,
             'brands' => $brands,
-            'categories' => $categories
+            'categories' => $categories,
+            'total' => $total,
+            'totalU' => $totalU,
+            'date' => $date,
+            'name' => $name,
         ]);
     }
+
+
+    
 
     /**
      * @IsGranted("ROLE_MANAGER")
@@ -48,7 +76,16 @@ class OrderController extends AbstractController
     {
 
         $order = $this->getDoctrine()->getRepository(Detail::class)->find($id);
+        
         $orderDetails = $DR->findDetailByOID($order);
+
+        $total = 0;
+
+        foreach ($orderDetails as $detail){
+            $totalOfIT = $detail -> getPrice() * $detail -> getQuantity();
+            $total += $totalOfIT;
+        }
+
 
         if ($order == null) {
             $this->addFlash('error', 'Order not found');
@@ -57,6 +94,7 @@ class OrderController extends AbstractController
         return $this->render('order/detail.html.twig', [
             'order' => $order,
             'detail' => $orderDetails,
+            'total' => $total,
 
         ]);
     }
@@ -157,10 +195,34 @@ class OrderController extends AbstractController
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
         $brands = $this->getDoctrine()->getRepository(Brand::class)->findAll();
         $orders = $repository->sortDateAsc();
-        return $this->render('product/index.html.twig', [
+        $total = "";
+        $totalU = "";
+        $date = [];
+        $get1 = $repository ->getDate();
+        $i = 0;
+        $j = 0;
+
+        foreach ($get1 as $g){
+            $date[$i] = $g['date'];
+            $i++;
+        }
+
+        $name = [];
+        $get2 = $repository ->getName();
+
+        foreach ($get2 as $g){
+            $name[$j] = $g['username'];
+            $j++;
+        }
+        return $this->render('order/index.html.twig', [
             'orders' => $orders,
             'brands' => $brands,
-            'categories' => $categories
+            'categories' => $categories,
+            'total' => $total,
+            'totalU' => $totalU,
+            'date' => $date,
+            'name' => $name,
+
         ]);
     }
 
@@ -171,10 +233,37 @@ class OrderController extends AbstractController
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
         $brands = $this->getDoctrine()->getRepository(Brand::class)->findAll();
         $orders = $repository->sortDateDesc();
-        return $this->render('product/index.html.twig', [
+        $total = "";
+        $totalU = "";
+        $date = [];
+        $get1 = $repository ->getDate();
+        $i = 0;
+        $j = 0;
+
+        foreach ($get1 as $g){
+            $date[$i] = $g['date'];
+            $i++;
+        }
+
+        $name = [];
+        $get2 = $repository ->getName();
+
+        foreach ($get2 as $g){
+            $name[$j] = $g['username'];
+            $j++;
+        }
+        return $this->render('order/index.html.twig', [
             'orders' => $orders,
             'brands' => $brands,
-            'categories' => $categories
+            'categories' => $categories,
+            'total' => $total,
+            'totalU' => $totalU,
+            'date' => $date,
+            'name' => $name,
+
         ]);
     }
+
+
+    
 }

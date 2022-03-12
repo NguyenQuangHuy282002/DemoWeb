@@ -46,19 +46,48 @@ class DetailRepository extends ServiceEntityRepository
     }
 
     /**
-      * @return Detail[] Returns an array of Detail objects
-      */
-    
-      public function findDetailByOID($id)
-      {
-          return $this->createQueryBuilder('d')
-              ->andWhere('d.orders = :val')
-              ->setParameter('val', $id)
-              ->orderBy('d.id', 'ASC')
-              ->getQuery()
-              ->getResult()
-          ;
-      }
+     * @return Detail[] Returns an array of Detail objects
+     */
+
+    public function findDetailByOID($id)
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.orders = :val')
+            ->setParameter('val', $id)
+            ->orderBy('d.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function getIt($date)
+    {
+        $intoDB = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT SUM(price * quantity) as totalPrice FROM `detail` AS d INNER JOIN `order` AS o on d.orders_id = o.id WHERE o.date = :date";
+
+        $getItNow = $intoDB -> prepare($sql);
+
+        $result = $getItNow->executeQuery(['date' => $date]);
+
+
+        return $result -> fetchAllAssociative();
+    }
+
+    public function getIt1($name)
+    {
+        $intoDB = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT SUM(price * quantity) as totalPrice FROM `detail` AS d INNER JOIN `order` AS o on d.orders_id = o.id WHERE o.username = :date";
+
+        $getItNow = $intoDB -> prepare($sql);
+
+        $result = $getItNow->executeQuery(['date' => $name]);
+
+
+        return $result -> fetchAllAssociative();
+    }
+
 
     // /**
     //  * @return Detail[] Returns an array of Detail objects

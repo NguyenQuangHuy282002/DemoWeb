@@ -56,6 +56,9 @@ class OrderRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+    
     /**
      * @return Order[]
      */
@@ -67,6 +70,38 @@ class OrderRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+
+    public function getDate()
+    {
+        $intoDB = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT DISTINCT date as date FROM `Order` ORDER BY date";
+
+        $getItNow = $intoDB -> prepare($sql);
+
+        $result = $getItNow->executeQuery();
+
+
+        return $result -> fetchAllAssociative();
+    }
+
+
+    public function getName()
+    {
+        $intoDB = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT DISTINCT username FROM `Order` ORDER BY username";
+
+        $getItNow = $intoDB -> prepare($sql);
+
+        $result = $getItNow->executeQuery();
+
+
+        return $result -> fetchAllAssociative();
+    }
+
 
     // /**
     //  * @return Order[] Returns an array of Order objects

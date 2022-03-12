@@ -95,6 +95,39 @@
 			color: blue
 		}
 
+		@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800 &display=swap");
+
+		.cart {
+			height: 100vh
+		}
+
+		.line {
+			width: 76px;
+			height: 6px;
+			background: #63d19e
+		}
+
+		.check1 {
+			display: flex;
+			background-color: #5E7F6E;
+			color: #fff;
+			font-size: 17px;
+			width: 45px;
+			height: 45px;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+		}
+
+		.invoice-link {
+			font-size: 15px
+		}
+
+
+		.background-muted {
+			background-color: #fafafc
+		}
+
 	</style>
 
 	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER') %}
@@ -111,73 +144,135 @@
 
 
 			<div class="container mt-5" style="padding: 150px 0">
-				<h1 class="text text-primary text-center">Order list</h1>
-				<div class="dropdown">
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-						Sort By Date Time
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li>
-							<a class="dropdown-item" href="{{path('sort_asc_date')}}">Newest</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="{{path('sort_desc_date')}}">Oldest</a>
-						</li>
-					</ul>
-				</div>
-				<table class="table table-borderless main">
-					<thead>
-						<tr class="head">
-							<th scope="col" class="ml-2">
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-								</div>
-							</th>
-							<th scope="col">Order ID</th>
-							<th scope="col">Status</th>
-							<th scope="col">Customer</th>
-							<th scope="col">Menu</th>
-							<th scope="col">Order Date</th>
-							<th scope="col">Delivery</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for order in orders %}
-							<tr class="rounded bg-white">
-								<th scope="row">
+				<div class="mt-5 bg-light border  rounded">
+					<h1 class="text text-primary text-center bg-white">Order list</h1>
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+							Sort By Date Time
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							<li>
+								<a class="dropdown-item" href="{{path('sort_asc_date')}}">Newest</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{path('sort_desc_date')}}">Oldest</a>
+							</li>
+						</ul>
+					</div>
+					<table class="table table-borderless main">
+						<thead>
+							<tr class="head">
+								<th scope="col" class="ml-2">
 									<div class="form-check">
 										<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
 									</div>
 								</th>
-								<td class="order-color">
-									<a href="{{path('Order_detail', {'id':order.id})}}">{{order.id}}</a>
-								</td>
-								<td>Valid
-									<i class="fas fa-coffin    "></i>
-								</td>
-								<td class="d-flex align-items-center">
-									<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/640px-User_icon_2.svg.png" class="rounded-circle" width="25">
-									<span class="ml-2">{{order.username}}</span>
-								</td>
-
-
-								<td>
-									<a href="{{path('Order_delete', {'id':order.id})}}" class="btn btn-primary btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-										Refuse Order
-									</a>
-								</td>
-								<td>{{order.date | date('d/m/Y')}}</td>
-								<td>
-									{# {% for delivery in order.delivery %} #}
-
-										<a href="{{path('delivery_detail',{'id': order.delivery.id})}}">{{order.delivery.name}}</a>
-
-									{# {% endfor %} #}
-								</td>
+								<th scope="col">Order ID</th>
+								<th scope="col">Status</th>
+								<th scope="col">Customer</th>
+								<th scope="col">Menu</th>
+								<th scope="col">Order Date</th>
+								<th scope="col">Delivery</th>
 							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{% for order in orders %}
+								<tr class="rounded bg-white">
+									<th scope="row">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+										</div>
+									</th>
+									<td class="order-color">
+										<a href="{{path('Order_detail', {'id':order.id})}}">{{order.id}}</a>
+									</td>
+									<td>Valid
+										<i class="fas fa-coffin    "></i>
+									</td>
+									<td class="d-flex align-items-center">
+										<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/640px-User_icon_2.svg.png" class="rounded-circle" width="25">
+										<span class="ml-2">{{order.username}}</span>
+									</td>
+
+
+									<td>
+										<a href="{{path('Order_delete', {'id':order.id})}}" class="btn btn-primary btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+											Refuse Order
+										</a>
+									</td>
+									<td>{{order.date | date('d/m/Y')}}</td>
+									<td>
+										<a href="{{path('delivery_detail',{'id': order.delivery.id})}}">{{order.delivery.name}}</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="container mt-1 mb-2">
+					<div class="row d-flex cart align-items-center justify-content-center">
+						<div class="col-md-10">
+							<div class="card">
+								<div class="d-flex justify-content-center border-bottom">
+									<div class="p-3 d-flex">
+										<h2>Revenue Statistic   .
+										</h2>
+										<span class="check1">
+											<i class="fa fa-check"></i>
+										</span>
+									</div>
+								</div>
+								<div class="row g-0">
+									<div class="col-md-6 border-right p-5">
+										<form action="{{path('order_total')}}" method="POST">
+											<p>By DateTime</p>
+											<select id="date" name="date" class="h-12 mt-1 text-sm text-pink-700 w-full rounded-lg cursor-pointer outline-none form-control">
+												<option class=" hidden">Select DateTime</option>
+												{% for date in date %}
+													<option class="text-muted" value="{{date}}">{{date}}</option>
+												{% endfor %}
+											</select>
+											<br>
+											<button type="submit" class="btn btn-primary cart-btn-transform" name="submit" data-abc="true">Check it now</button>
+										</form>
+										<hr>
+										<p>
+											<strong>Total Revenue Of This Day:
+											</strong>
+											<h3>$
+												{{total}}</h3>
+										</p>
+									</div>
+									<div class="col-md-6 background-muted">
+										<div class="border-right p-5">
+
+											<form action="{{path('order_totalU')}}" method="POST">
+												<p>By User</p>
+												<select id="name" name="name" class="h-12 mt-1 text-sm text-pink-700 w-full rounded-lg cursor-pointer outline-none form-control">
+													<option class=" hidden">Select User</option>
+													{% for name in name %}
+														<option class="text-muted" value="{{name}}">{{name}}</option>
+													{% endfor %}
+												</select>
+												<br>
+												<button type="submit" class="btn btn-primary cart-btn-transform" name="submit" data-abc="true">Check it now</button>
+											</form>
+											<hr>
+											<p>
+												<strong>Total Revenue Of This Day:
+												</strong>
+												<h3>$
+													{{totalU}}</h3>
+											</p>
+										</div>
+
+									</div>
+								</div>
+								<div></div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</body>
 	{% endif %}

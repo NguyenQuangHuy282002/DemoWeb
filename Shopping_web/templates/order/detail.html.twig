@@ -111,7 +111,9 @@
 
 
 			<div class="container mt-5" style="padding: 150px 0">
-				<h1 class="text text-primary text-center">Detail Information of Order {{order.id}}</h1>
+				<h1 class="text text-primary text-center">Detail Information of Order
+					{{order.id}}</h1>
+
 				<table class="table table-borderless main">
 					<thead>
 						<tr class="head">
@@ -135,7 +137,7 @@
 									</div>
 								</th>
 								<td class="order-color">
-										<a href="{{path('product_detail', {'id':order.id})}}">{{order.productName}}</a>								
+									<a href="{{path('product_detail', {'id':order.id})}}">{{order.productName}}</a>
 								</td>
 								<td class="d-flex align-items-center">
 									$
@@ -151,6 +153,11 @@
 						{% endfor %}
 					</tbody>
 				</table>
+				<div class="d-flex justify-content-between col-md-4">
+					<h3>Total Price Of this Order:
+					</h3>
+					<h3 class="text text-secondary">{{total}}</h3>
+				</div>
 			</div>
 		</body>
 	{% endif %}
